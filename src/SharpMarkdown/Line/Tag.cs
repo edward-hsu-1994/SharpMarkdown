@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace SharpMarkdown {
+namespace SharpMarkdown.Line {
     public class Tag : Content{
         public string Id { get; set; }
         public string URL { get; set; }

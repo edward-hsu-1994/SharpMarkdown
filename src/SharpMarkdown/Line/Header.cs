@@ -1,13 +1,15 @@
-﻿using System;
+﻿using SharpMarkdown.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace SharpMarkdown {
+namespace SharpMarkdown.Paragraph {
     /// <summary>
     /// Markdown標題
     /// </summary>
+    [Match(Regex = @"#+\s+.+")]
     public class Header : Content{
         /// <summary>
         /// 階層
