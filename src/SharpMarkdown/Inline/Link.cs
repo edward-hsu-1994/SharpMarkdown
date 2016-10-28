@@ -8,7 +8,7 @@ using SharpMarkdown.Attributes;
 
 namespace SharpMarkdown.Inline {
     [Match(Regex = @"^\[.+\]\s*\[.+\]")]
-    [Match(Regex = @"\[.+\]\s*\(.+\)")]
+    [Match(Regex = @"^\[.+\]\s*\(.+\)")]
     public class Link : Content {
         /// <summary>
         /// 文字
@@ -31,7 +31,7 @@ namespace SharpMarkdown.Inline {
                 if (string.IsNullOrWhiteSpace(URL)) {
                     result += $"[{ReferenceTag.Id}]";
                 } else {
-                    result += $"[{URL}]";
+                    result += $"({URL})";
                 }
                 return result;
             }
@@ -42,14 +42,14 @@ namespace SharpMarkdown.Inline {
 
         public static Link Parse(string text,out int length ) {
             try {
-                Regex tagLink = new Regex(@"\[.+\]\s*\[.+\]");
-                Regex urlLink = new Regex(@"\[.+\]\s*\(.+\)");
+                Regex tagLink = new Regex(@"\[[^\]]+\]\s*\[[^\]]+\]");
+                Regex urlLink = new Regex(@"\[[^\]]+\]\s*\([^\)]+\)");
 
-                string linkText =
-                    tagLink.Match(text)?.Value ??
+                string linkText = tagLink.IsMatch(text) ?
+                    tagLink.Match(text)?.Value :
                     urlLink.Match(text)?.Value;
 
-                Regex t1Regex = new Regex(@"\[.+\]");
+                Regex t1Regex = new Regex(@"\[[^\]]+\]");
                 Regex t2Regex = new Regex(@"\(.+\)");
                 Link result = new Link();
                 result.Text = t1Regex.Match(linkText).Value;
@@ -71,7 +71,7 @@ namespace SharpMarkdown.Inline {
                     length = match.Index + match.Length;
                 }
                 return result;
-            }catch {
+            }catch(Exception e) {
                 throw new FormatException();
             }
         }
