@@ -14,21 +14,22 @@ namespace SharpMarkdown.Paragraph {
         /// <summary>
         /// 階層
         /// </summary>
-        public int Level { get; set; } 
+        public int Level { get; set; }
 
         /// <summary>
         /// 內容
         /// </summary>
-        public string Text { get; set; }
+        public List<Content> Children { get; set; } = new List<Content>();
         
         public override string OuterMarkdown {
             get {
-                return new string('#', Level) + " " + Text;
+                return new string('#', Level) + " " + 
+                    string.Join("",Children);
             }
             set {
                 Header header = Parse(value);
                 this.Level = header.Level;
-                this.Text = header.Text;
+                this.Children = header.Children;
             }
         }
 
@@ -40,7 +41,7 @@ namespace SharpMarkdown.Paragraph {
 
                 return new Header() {
                     Level = headerText.Length,
-                    Text = text.Replace(headerText, "").Trim()
+                    Children = Content.InlineParse(text.Replace(headerText, "").Trim())
                 };
             }catch(Exception e) {
                 throw new FormatException();

@@ -10,8 +10,8 @@ namespace TestConsole {
     public class Program {
         public static void Main(string[] args) {
             Regex k = new Regex(@"^\*\*.+\*\*");
-            var kk = k.IsMatch("哈哈哈哈**XPY**");
-            var p = Paragraph.Parse("哈哈哈哈**XPY**");
+            var kk = k.IsMatch("哈哈哈哈**[XPY][id]**");
+            var p = Paragraph.Parse("哈哈哈哈**[XPY](https://ggg)**");
         }
     }
 }

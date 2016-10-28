@@ -8,6 +8,18 @@ using System.Threading.Tasks;
 namespace SharpMarkdown.Inline {
     [Match(Regex = @"^\*\*.+\*\*")]
     public class Bold : Content{
+        public List<Content> Children { get; set; } = new List<Content>();
+
+        public override string OuterMarkdown {
+            get {
+                return string.Join("",Children.Select(x=>x.OuterMarkdown));
+            }
+            set {
+                Children = Content.InlineParse(value.Trim());
+            }
+        }
+
+
         public static Bold Parse(string text, out int length) {
             text = text.Trim();
             var attr = MatchAttribute.GetMatchAttribute<Bold>();
@@ -17,7 +29,7 @@ namespace SharpMarkdown.Inline {
             text = match.Value.Substring(2, match.Value.Length - 4);
 
             length = match.Index + match.Length;
-            return new Bold() { OuterMarkdown = text };
+            return new Bold() { Children = Content.InlineParse(text) };
         }
     }
 }
