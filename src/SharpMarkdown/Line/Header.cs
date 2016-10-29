@@ -19,7 +19,7 @@ namespace SharpMarkdown.Line {
         public override string OuterMarkdown {
             get {
                 return new string('#', Level) + " " + 
-                    string.Join("",Children);
+                    string.Join("",Children.Select(x=>x.OuterMarkdown));
             }
             set {
                 Header header = Parse(value);
