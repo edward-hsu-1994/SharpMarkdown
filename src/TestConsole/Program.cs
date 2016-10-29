@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace TestConsole {
     public class Program {
         public static void Main(string[] args) {
-            var p = Blockquotes.Parse("> 哈哈哈哈\\***![XPY](https://ggg)**<http://autolink.org>");
+            var p = Content.LineParse("### 哈哈哈哈\\***![XPY](https://ggg)**<http://autolink.org>");
         }
     }
 }
