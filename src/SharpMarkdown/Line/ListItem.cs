@@ -10,7 +10,7 @@ namespace SharpMarkdown.Line {
     [Match(Regex = @"^\+\.\s+.+$")]
     [Match(Regex = @"^\+\.\s+.+$")]
     [Match(Regex = @"^\*\.\s+.+$")]
-    public class ListItem : Paragraph{
+    public class ListItem : Content{
         public string Symbol { get; set; }
 
         public override string OuterMarkdown {
@@ -34,7 +34,7 @@ namespace SharpMarkdown.Line {
             try {
                 return new ListItem() {
                     Symbol = splited[0],
-                    Children = Content.InlineParse(splited[1])
+                    Children = ContentBase.InlineParse(splited[1])
                 };
             }catch {
                 throw new FormatException();

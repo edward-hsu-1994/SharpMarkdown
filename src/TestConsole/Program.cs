@@ -12,7 +12,7 @@ namespace TestConsole {
         public static void Main(string[] args) {
             Regex k = new Regex(@"^\*\*.+\*\*");
             var kk = k.IsMatch("哈哈哈哈**[XPY][id]**");
-            var p = Paragraph.Parse("哈哈哈哈\\***[XPY](https://ggg)**<http://autolink.org>");
+            var p = Content.Parse("哈哈哈哈\\***[XPY](https://ggg)**<http://autolink.org>");
         }
     }
 }

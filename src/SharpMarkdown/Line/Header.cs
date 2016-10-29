@@ -10,7 +10,7 @@ namespace SharpMarkdown.Line {
     /// Markdown標題
     /// </summary>
     [Match(Regex = @"#+\s+.+")]
-    public class Header : Paragraph{
+    public class Header : Content{
         /// <summary>
         /// 階層
         /// </summary>
@@ -36,7 +36,7 @@ namespace SharpMarkdown.Line {
 
                 return new Header() {
                     Level = headerText.Length,
-                    Children = Content.InlineParse(text.Replace(headerText, "").Trim())
+                    Children = ContentBase.InlineParse(text.Replace(headerText, "").Trim())
                 };
             }catch(Exception e) {
                 throw new FormatException();

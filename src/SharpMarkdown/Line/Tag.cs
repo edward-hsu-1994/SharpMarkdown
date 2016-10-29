@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SharpMarkdown.Line {
-    public class Tag : Content{
+    public class Tag : ContentBase{
         public string Id { get; set; }
         public string URL { get; set; }
         public string Optional { get; set; }

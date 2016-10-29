@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SharpMarkdown.Inline {
@@ -24,13 +25,19 @@ namespace SharpMarkdown.Inline {
         }
 
         public static AutoLink Parse(string text,out int length) {
-            var check = MatchAttribute.GetMatchAttributes<AutoLink>()
-                .Select(x => x.GetRegex().IsMatch(text))
-                .Any();
-            if (!check) throw new FormatException();
+            var attrs = MatchAttribute.GetMatchAttributes<AutoLink>()
+                .Select(x => new {
+                    match = x.GetRegex().IsMatch(text),
+                    attr = x
+                });
+            if (!attrs.Any(x=>x.match)) throw new FormatException();
 
-            var value = text.Substring(1, text.Length - 2);
-            length = text.Length;
+            Match match = attrs.Where(x => x.match).FirstOrDefault().attr
+                .GetRegex().Match(text);
+
+            string temp = match.Value;
+            var value = temp.Substring(1, text.Length - 2);
+            length = match.Index + match.Length;
             return new AutoLink() {
                 Text = value,
                 URL = value

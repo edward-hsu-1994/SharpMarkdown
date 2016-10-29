@@ -9,7 +9,7 @@ using SharpMarkdown.Attributes;
 namespace SharpMarkdown.Inline {
     [Match(Regex = @"^\[.+\]\s*\[.+\]")]
     [Match(Regex = @"^\[.+\]\s*\(.+\)")]
-    public class Link : Content {
+    public class Link : ContentBase {
         /// <summary>
         /// 文字
         /// </summary>
