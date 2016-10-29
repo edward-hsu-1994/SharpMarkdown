@@ -37,7 +37,7 @@ namespace SharpMarkdown.Area {
                     Regex regex = new Regex(@"\s*>\s?");
                     var temp = regex.Match(x);
                     return x.Substring(temp.Index + temp.Length);
-                }));
+                })).Trim();
 
             result.Children = Content.AreaParse(text2);
             

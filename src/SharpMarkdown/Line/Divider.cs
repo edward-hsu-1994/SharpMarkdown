@@ -6,7 +6,10 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SharpMarkdown.Line {
-    [Match(Regex = @"^([\*\-]\s?){3,}")]
+    [Match(Regex = @"^-{3,}$")]
+    [Match(Regex = @"^-{3,}(\r?\n)")]
+    [Match(Regex = @"^\*{3,}$")]
+    [Match(Regex = @"^\*{3,}(\r?\n)")]
     public class Divider : ContentBase {
         public override string OuterMarkdown {
             get {

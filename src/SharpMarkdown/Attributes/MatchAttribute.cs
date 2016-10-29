@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SharpMarkdown.Attributes {
-    [AttributeUsage(AttributeTargets.Class,AllowMultiple =true)]
+    [AttributeUsage(AttributeTargets.Class,AllowMultiple =true,Inherited = false)]
     public class MatchAttribute : Attribute {
         public string Regex { get; set; }
 

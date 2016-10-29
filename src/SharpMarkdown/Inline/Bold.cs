@@ -6,8 +6,8 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SharpMarkdown.Inline {
-    [Match(Regex = @"^\*\*.+\*\*")]
-    [Match(Regex = @"^__.+__")]
+    [Match(Regex = @"^\*\*[^\*\r\n]+\*\*")]
+    [Match(Regex = @"^__[^_\r\n]+__")]
     public class Bold : Content{
         public override string OuterMarkdown {
             get {

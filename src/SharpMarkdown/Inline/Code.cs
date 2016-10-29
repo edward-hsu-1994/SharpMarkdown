@@ -7,12 +7,11 @@ using System.Threading.Tasks;
 
 namespace SharpMarkdown.Inline {
     [Match(Regex = @"^`.+`")]
-    public class Code : Content {
+    public class Code : ContentBase {
         public string Text { get; set; }
         public override string OuterMarkdown {
             get {
-                return "`" + string.Join("", Children.Select(x => x.OuterMarkdown))
-                    +"`";
+                return "`" + Text + "`";
             }
             set {
                 int temp = 0;

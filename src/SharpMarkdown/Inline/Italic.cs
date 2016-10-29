@@ -5,13 +5,13 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace SharpMarkdown.Inline {
-    [Match(Regex = @"^\*.+\*")]
-    [Match(Regex = @"^__.+__")]
+    [Match(Regex = @"^\*[^\*\r\n]+\*")]
+    [Match(Regex = @"^__[^_\r\n]+__")]
     public class Italic : Content {
         public override string OuterMarkdown {
             get {
-                return "__" + string.Join("", Children.Select(x => x.OuterMarkdown))
-                    + "__";
+                return "*" + string.Join("", Children.Select(x => x.OuterMarkdown))
+                    + "*";
             }
             set {
                 Children = ContentBase.AreaParse(value.Trim());
@@ -30,7 +30,7 @@ namespace SharpMarkdown.Inline {
             var temp = attrs.Where(x => x.match).FirstOrDefault();
             var match = temp.attr.GetRegex()
                 .Match(text);
-            if(temp.attr.Regex == @"^\*.+\*"){
+            if(temp.attr.Regex == @"^\*[^\*\r\n]+\*") {
                 text = match.Value.Substring(1, match.Value.Length - 2);
             }else{
                 text = match.Value.Substring(2, match.Value.Length - 4);

@@ -12,7 +12,7 @@ namespace TestConsole {
     public class Program {
         public static void Main(string[] args) {
             var text = System.IO.File.ReadAllText("test.md");
-            var p = Content.AreaParse(text);
+            var p = Content.Parse(text);
         }
     }
 }

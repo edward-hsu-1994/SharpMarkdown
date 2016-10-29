@@ -7,10 +7,14 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SharpMarkdown.Line {
-    [Match(Regex = @"^\d+\.\s*[^\r\n]*")]
-    [Match(Regex = @"^\++\.\s*[^\r\n]*")]
-    [Match(Regex = @"^\-+\.\s*[^\r\n]*")]
-    [Match(Regex = @"^\.+\.\s*[^\r\n]*")]
+    [Match(Regex = @"^\d+\.\s+[^\r\n]+$")]
+    [Match(Regex = @"^\d+\.\s+[^\r\n]+\r?\n")]
+    [Match(Regex = @"^\*\s+[^\*\r\n]+$")]
+    [Match(Regex = @"^\*\s+[^\*\r\n]+\r?\n")]
+    [Match(Regex = @"^\+\s+[^\+\r\n]+$")]
+    [Match(Regex = @"^\+\s+[^\+\r\n]+\r?\n")]
+    [Match(Regex = @"^\-\s+[^\-\r\n]+$")]
+    [Match(Regex = @"^\-\s+[^\-\r\n]+\r\n")]
     public class ListItem : Content{
         public string Symbol { get; set; }
 
@@ -38,7 +42,7 @@ namespace SharpMarkdown.Line {
                 .FirstOrDefault().attr
                 .GetRegex().Match(text);
             
-            var splited = text.Split(new char[] { ' ' },2).Select(x => x.Trim()).ToArray();
+            var splited = match.Value.Split(new char[] { ' ' },2).Select(x => x.Trim()).ToArray();
             try {
                 length = match.Index + match.Length;
                 return new ListItem() {

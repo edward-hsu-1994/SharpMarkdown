@@ -7,6 +7,7 @@ using System.Reflection;
 using SharpMarkdown.Inline;
 using SharpMarkdown.Line;
 using SharpMarkdown.Area;
+using System.Text.RegularExpressions;
 
 namespace SharpMarkdown {
     /// <summary>
@@ -17,6 +18,18 @@ namespace SharpMarkdown {
         /// 完整Markdown片段
         /// </summary>
         public virtual string OuterMarkdown { get; set; }
+
+        protected Match GetMatch(string text) {
+            return MatchAttribute.GetMatchAttributes<ListItem>()
+                .Select(x => new {
+                    match = x.GetRegex().IsMatch(text),
+                    attr = x
+                })
+                .Where(x=>x.match)
+                .FirstOrDefault()
+                ?.attr.GetRegex().Match(text);
+        }
+
 
         /// <summary>
         /// 隱含轉換<see cref="string"/>為<see cref="ContentBase"/>內容
@@ -48,14 +61,16 @@ namespace SharpMarkdown {
             new Type[] {
                 //typeof(BlockquotesItem),
                 typeof(Divider),typeof(Header),
-                typeof(ListItem),typeof(Tag)
+                typeof(ListItem),typeof(Tag),
+                typeof(Content)
             });
 
         public static List<Type> AreaTypes = new List<Type>(
             new Type[] {
+                typeof(List),
                 typeof(Blockquotes)
             });
-        private static List<ContentBase> InlineParse(string text) {
+        public static List<ContentBase> InlineParse(string text) {
             List<ContentBase> result = new List<ContentBase>();
             string temp = text;
             while (temp.Length > 0) {
@@ -151,9 +166,9 @@ namespace SharpMarkdown {
                 int skip = 1;
                 if (temp.FirstOrDefault() == '\\') {//溢出字元
                     skip = 2;
-                }else if (temp.FirstOrDefault() == '\n') {
+                /*}else if (temp.FirstOrDefault() == '\n') {
                     skip = 1;
-                    check = true;
+                    check = true;*/
                 } else {
                     foreach (var type in AreaTypes) {
                         if (!MatchAttribute.IsMatch(type, temp)) continue;
@@ -205,10 +220,38 @@ namespace SharpMarkdown {
                         result.Add(last);
                     }
                 }
-                temp = temp.Substring(skip);
+                temp = new string(temp.Skip(skip).ToArray());//.Substring(skip);
             }
             
             return result.Where(x=>x.OuterMarkdown.Trim().Length != 0).ToList();
+        }
+
+        
+        public static List<ContentBase> Parse(string text) {
+            List<ContentBase> result = new List<ContentBase>();
+            text = text.Trim().Replace("\r","");
+
+            var types = AreaTypes.Concat(LineTypes);
+
+            for (; text.Length>0;) {
+                int skip = 0;
+                //剖析引用參數
+                object[] args = new object[] { text, 0 };
+
+                //範圍樣式與行樣式檢查
+                foreach (var type in types) {
+                    if (!MatchAttribute.IsMatch(type, text)) continue;
+
+                    var parseMethod = type.GetTypeInfo().GetMethod("Parse");
+                    result.Add((ContentBase)parseMethod.Invoke(null, args));
+
+                    
+                    skip = (int)args[1];
+                    break;
+                }
+                text = new string(text.Skip(skip).ToArray());
+            }
+            return result.Where(x=>x.OuterMarkdown.Length != 0).ToList();
         }
     }
 }
