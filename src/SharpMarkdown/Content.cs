@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Reflection;
 using SharpMarkdown.Inline;
-using ExpressionReflection;
 
 namespace SharpMarkdown {
     /// <summary>
@@ -45,24 +44,28 @@ namespace SharpMarkdown {
             while(temp.Length > 0) {
                 bool check = false;
                 int skip = 1;
-                foreach (var type in InlineTypes) {
-                    if (!MatchAttribute.IsMatch(type, temp)) continue;
+                if (temp.FirstOrDefault() == '\\') {//溢出字元
+                    skip = 2;
+                } else {
+                    foreach (var type in InlineTypes) {
+                        if (!MatchAttribute.IsMatch(type, temp)) continue;
 
-                    var parseMethod = type.GetTypeInfo().GetMethod("Parse");
+                        var parseMethod = type.GetTypeInfo().GetMethod("Parse");
 
-                    var args = new object[] { temp, 0 };
-                    result.Add((Content)parseMethod.Invoke(null, args));
-                    skip = (int)args[1];
+                        var args = new object[] { temp, 0 };
+                        result.Add((Content)parseMethod.Invoke(null, args));
+                        skip = (int)args[1];
 
-                    check = true;
-                    break;
+                        check = true;
+                        break;
+                    }
                 }
                 if (!check) { 
                     var last = result.LastOrDefault();
                     if (last?.GetType() == typeof(Content)) {
-                        last.OuterMarkdown += temp.First();
+                        last.OuterMarkdown += temp.Substring(0,skip);
                     } else {
-                        last = new Content() { OuterMarkdown = temp.First().ToString() };
+                        last = new Content() { OuterMarkdown = temp.Substring(0,skip) };
                         result.Add(last);
                     }
                 }
