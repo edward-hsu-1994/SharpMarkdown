@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SharpMarkdown.Line {
-    [Match(Regex = @"^(>\s)+.*")]
+    [Match(Regex = @"^(>\s?)+.*")]
     public class BlockquotesItem : Content {
         public int Level { get; set;}
         public override string OuterMarkdown {
