@@ -11,7 +11,8 @@ namespace SharpMarkdown.Inline {
         public string Text { get; set; }
         public override string OuterMarkdown {
             get {
-                return string.Join("", Children.Select(x => x.OuterMarkdown));
+                return "`" + string.Join("", Children.Select(x => x.OuterMarkdown))
+                    +"`";
             }
             set {
                 int temp = 0;

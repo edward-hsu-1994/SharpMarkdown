@@ -14,15 +14,15 @@ namespace SharpMarkdown {
                 return string.Join("", Children.Select(x => x.OuterMarkdown));
             }
             set {
-                Children = ContentBase.InlineParse(value.Trim());
+                Children = ContentBase.AreaParse(value.Trim());
             }
         }    
-        
+        /*
         public static Content Parse(string text) {
             var temp = text;
             Content result = new Content();
             result.Children = ContentBase.InlineParse(text);
             return result;
-        }
+        }*/
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SharpMarkdown.Line {
@@ -17,12 +18,20 @@ namespace SharpMarkdown.Line {
             }
         }
         public static Divider Parse(string text, out int length) {
-            var check = MatchAttribute.GetMatchAttributes<Divider>()
-                .Select(x => x.GetRegex().IsMatch(text))
-                .Any();
+            var attrs = MatchAttribute.GetMatchAttributes<Divider>()
+                .Select(x => new {
+                    match = x.GetRegex().IsMatch(text),
+                    attr = x
+                });
 
-            if (!check) throw new FormatException();
-            length = text.Length;
+            if (!attrs.Any(x=>x.match)) throw new FormatException();
+
+            
+            Match match = attrs.Where(x => x.match)
+                    .FirstOrDefault().attr
+                    .GetRegex().Match(text);
+
+            length = match.Index + match.Length;
             return new Divider();
         }
 

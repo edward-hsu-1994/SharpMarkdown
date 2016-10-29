@@ -1,4 +1,5 @@
 ﻿using SharpMarkdown;
+using SharpMarkdown.Area;
 using SharpMarkdown.Inline;
 using SharpMarkdown.Line;
 using System;
@@ -10,7 +11,9 @@ using System.Threading.Tasks;
 namespace TestConsole {
     public class Program {
         public static void Main(string[] args) {
-            var p = Content.LineParse("### 哈哈哈哈\\***![XPY](https://ggg)**<http://autolink.org>");
+            var text = System.IO.File.ReadAllText("test.md");
+            int temp = 0;
+            var p = Content.AreaParse(text);
         }
     }
 }

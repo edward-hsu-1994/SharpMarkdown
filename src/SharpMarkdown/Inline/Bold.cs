@@ -11,10 +11,11 @@ namespace SharpMarkdown.Inline {
     public class Bold : Content{
         public override string OuterMarkdown {
             get {
-                return string.Join("",Children.Select(x=>x.OuterMarkdown));
+                return "**" + string.Join("",Children.Select(x=>x.OuterMarkdown))
+                    + "**";
             }
             set {
-                Children = ContentBase.InlineParse(value.Trim());
+                Children = ContentBase.AreaParse(value.Trim());
             }
         }
 
@@ -32,7 +33,7 @@ namespace SharpMarkdown.Inline {
 
             length = match.Index + match.Length;
             text = match.Value.Substring(2, match.Value.Length - 4);
-            return new Bold() { Children = ContentBase.InlineParse(text) };
+            return new Bold() { Children = ContentBase.AreaParse(text) };
         }
     }
 }

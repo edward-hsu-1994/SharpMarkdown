@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 
 namespace SharpMarkdown.Inline {
     [Match(Regex = @"^\*.+\*")]
-    [Match(Regex = @"^_.+_")]
+    [Match(Regex = @"^__.+__")]
     public class Italic : Content {
         public override string OuterMarkdown {
             get {
-                return string.Join("", Children.Select(x => x.OuterMarkdown));
+                return "__" + string.Join("", Children.Select(x => x.OuterMarkdown))
+                    + "__";
             }
             set {
-                Children = ContentBase.InlineParse(value.Trim());
+                Children = ContentBase.AreaParse(value.Trim());
             }
         }
 
@@ -26,12 +27,17 @@ namespace SharpMarkdown.Inline {
                 });
 
             if (!attrs.Any(x => x.match)) throw new FormatException();
-            var match = attrs.Where(x => x.match).FirstOrDefault().attr.GetRegex()
+            var temp = attrs.Where(x => x.match).FirstOrDefault();
+            var match = temp.attr.GetRegex()
                 .Match(text);
-
+            if(temp.attr.Regex == @"^\*.+\*"){
+                text = match.Value.Substring(1, match.Value.Length - 2);
+            }else{
+                text = match.Value.Substring(2, match.Value.Length - 4);
+            }
             length = match.Index + match.Length;
-            text = match.Value.Substring(2, match.Value.Length - 4);
-            return new Italic() { Children = ContentBase.InlineParse(text) };
+            
+            return new Italic() { Children = ContentBase.AreaParse(text) };
         }
     }
 }

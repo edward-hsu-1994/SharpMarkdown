@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Reflection;
 using SharpMarkdown.Inline;
 using SharpMarkdown.Line;
+using SharpMarkdown.Area;
 
 namespace SharpMarkdown {
     /// <summary>
@@ -45,11 +46,16 @@ namespace SharpMarkdown {
 
         public static List<Type> LineTypes = new List<Type>(
             new Type[] {
-                typeof(BlockquotesItem),
+                //typeof(BlockquotesItem),
                 typeof(Divider),typeof(Header),
                 typeof(ListItem),typeof(Tag)
             });
-        public static List<ContentBase> InlineParse(string text) {
+
+        public static List<Type> AreaTypes = new List<Type>(
+            new Type[] {
+                typeof(Blockquotes)
+            });
+        private static List<ContentBase> InlineParse(string text) {
             List<ContentBase> result = new List<ContentBase>();
             string temp = text;
             while (temp.Length > 0) {
@@ -57,6 +63,9 @@ namespace SharpMarkdown {
                 int skip = 1;
                 if (temp.FirstOrDefault() == '\\') {//溢出字元
                     skip = 2;
+                } else if (temp.FirstOrDefault() == '\n') {
+                    skip = 1;
+                    check = true;
                 } else {
                     foreach (var type in InlineTypes) {
                         if (!MatchAttribute.IsMatch(type, temp)) continue;
@@ -85,7 +94,7 @@ namespace SharpMarkdown {
             return result;
         }
 
-        public static List<ContentBase> LineParse(string text) {
+        private static List<ContentBase> LineParse(string text) {
             List<ContentBase> result = new List<ContentBase>();
             string temp = text;
             while (temp.Length > 0) {
@@ -93,6 +102,9 @@ namespace SharpMarkdown {
                 int skip = 1;
                 if (temp.FirstOrDefault() == '\\') {//溢出字元
                     skip = 2;
+                } else if (temp.FirstOrDefault() == '\n') {
+                    skip = 1;
+                    check = true;
                 } else {
                     foreach (var type in LineTypes) {
                         if (!MatchAttribute.IsMatch(type, temp)) continue;
@@ -129,6 +141,74 @@ namespace SharpMarkdown {
                 temp = temp.Substring(skip);
             }
             return result;
+        }
+
+        public static List<ContentBase> AreaParse(string text) {
+            List<ContentBase> result = new List<ContentBase>();
+            string temp = text;
+            while (temp.Length > 0) {
+                bool check = false;
+                int skip = 1;
+                if (temp.FirstOrDefault() == '\\') {//溢出字元
+                    skip = 2;
+                }else if (temp.FirstOrDefault() == '\n') {
+                    skip = 1;
+                    check = true;
+                } else {
+                    foreach (var type in AreaTypes) {
+                        if (!MatchAttribute.IsMatch(type, temp)) continue;
+
+                        var parseMethod = type.GetTypeInfo().GetMethod("Parse");
+
+                        var args = new object[] { temp ,0};
+                        result.Add((ContentBase)parseMethod.Invoke(null, args));
+
+                        skip = (int)args[1];
+                        check = true;
+                        break;
+                    }
+                    if (!check) {
+                        foreach (var type in LineTypes) {
+                            if (!MatchAttribute.IsMatch(type, temp)) continue;
+
+                            var parseMethod = type.GetTypeInfo().GetMethod("Parse");
+
+                            var args = new object[] { temp, 0 };
+                            result.Add((ContentBase)parseMethod.Invoke(null, args));
+
+                            skip = (int)args[1];
+                            check = true;
+                            break;
+                        }
+                    }
+                    if (!check) {
+                        foreach (var type in InlineTypes) {
+                            if (!MatchAttribute.IsMatch(type, temp)) continue;
+
+                            var parseMethod = type.GetTypeInfo().GetMethod("Parse");
+
+                            var args = new object[] { temp, 0 };
+                            result.Add((ContentBase)parseMethod.Invoke(null, args));
+                            skip = (int)args[1];
+
+                            check = true;
+                            break;
+                        }
+                    }
+                }
+                if (!check) {
+                    var last = result.LastOrDefault();
+                    if (last?.GetType() == typeof(ContentBase)) {
+                        last.OuterMarkdown += temp.Substring(0, skip);
+                    } else {
+                        last = new ContentBase() { OuterMarkdown = temp.Substring(0, skip) };
+                        result.Add(last);
+                    }
+                }
+                temp = temp.Substring(skip);
+            }
+            
+            return result.Where(x=>x.OuterMarkdown.Trim().Length != 0).ToList();
         }
     }
 }

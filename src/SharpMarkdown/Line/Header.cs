@@ -9,7 +9,7 @@ namespace SharpMarkdown.Line {
     /// <summary>
     /// Markdown標題
     /// </summary>
-    [Match(Regex = @"#+\s+.+")]
+    [Match(Regex = @"^(\s*#)+\s+[^\n]+")]
     public class Header : Content{
         /// <summary>
         /// 階層
@@ -22,34 +22,35 @@ namespace SharpMarkdown.Line {
                     string.Join("",Children.Select(x=>x.OuterMarkdown));
             }
             set {
-                Header header = Parse(value);
+                int temp = 0;
+                Header header = Parse(value,out temp);
                 this.Level = header.Level;
                 this.Children = header.Children;
             }
         }
 
-        public static Header Parse(string text) {
+        public static Header Parse(string text,out int length) {
             try {
-                text = text.Trim();
-                Regex regex = new Regex(@"#+");
-                var headerText = regex.Match(text).Value;
+                var attrs = MatchAttribute.GetMatchAttributes<Header>()
+                    .Select(x =>new {
+                        match = x.GetRegex().IsMatch(text),
+                        attr = x
+                    });
 
+                Match match = attrs.Where(x => x.match)
+                    .FirstOrDefault().attr
+                    .GetRegex().Match(text);
+
+                Regex regex = new Regex(@"#+");
+                var headerText = regex.Match(match.Value).Value;
+
+                length = match.Index + match.Length;
                 return new Header() {
                     Level = headerText.Length,
-                    Children = ContentBase.InlineParse(text.Replace(headerText, "").Trim())
+                    Children = ContentBase.AreaParse(match.Value.Replace(headerText, "").Trim())
                 };
             }catch(Exception e) {
                 throw new FormatException();
-            }
-        }
-
-        public static bool TryParse(string text,out Header result) {
-            try {
-                result = Parse(text);
-                return true;
-            } catch {
-                result = null;
-                return false;
             }
         }
     }
