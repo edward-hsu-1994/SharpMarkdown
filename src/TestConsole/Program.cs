@@ -12,7 +12,6 @@ namespace TestConsole {
     public class Program {
         public static void Main(string[] args) {
             var text = System.IO.File.ReadAllText("test.md");
-            int temp = 0;
             var p = Content.AreaParse(text);
         }
     }

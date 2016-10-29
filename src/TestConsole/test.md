@@ -1,4 +1,6 @@
 ﻿# **TITLE**~  
+[goodidea]: http://goodidea.nkfust.edu.tw/
+
   
   > ## This is a header.
 > 
