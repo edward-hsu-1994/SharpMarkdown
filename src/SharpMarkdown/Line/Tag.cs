@@ -9,7 +9,7 @@ namespace SharpMarkdown.Line {
         public string Id { get; set; }
         public string URL { get; set; }
         public string Optional { get; set; }
-        internal bool IsRef { get; set; }
+        public bool IsRef { get; set; }
         public override string OuterMarkdown {
             get {
                 return $"[{Id}]: {URL} \"{Optional}\"";

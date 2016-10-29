@@ -29,7 +29,7 @@ namespace SharpMarkdown.Inline {
             get {
                 string result = $"[{Text}]";
                 if (string.IsNullOrWhiteSpace(URL)) {
-                    result += $"[{ReferenceTag.Id}]";
+                    result += $"[{ReferenceTag?.Id}]";
                 } else {
                     result += $"({URL})";
                 }
@@ -40,10 +40,19 @@ namespace SharpMarkdown.Inline {
                 Link autoLink = Parse(value, out temp);
                 this.Text = autoLink.Text;
                 this.URL = autoLink.URL;
+                this.ReferenceTag = autoLink.ReferenceTag;
             }
         }
 
         public static Link Parse(string text,out int length ) {
+            var attrs = MatchAttribute.GetMatchAttributes<Link>()
+                .Select(x => new {
+                    match = x.GetRegex().IsMatch(text),
+                    attr = x
+                });
+
+            if (!attrs.Any(x => x.match)) throw new FormatException();
+
             try {
                 Regex tagLink = new Regex(@"\[[^\]]+\]\s*\[[^\]]+\]");
                 Regex urlLink = new Regex(@"\[[^\]]+\]\s*\([^\)]+\)");

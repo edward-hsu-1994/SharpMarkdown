@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SharpMarkdown.Inline {
     [Match(Regex = @"^\*\*.+\*\*")]
-    [Match(Regex = @"^\*\*.+\*\*")]
+    [Match(Regex = @"^__.+__")]
     public class Bold : Content{
         public override string OuterMarkdown {
             get {
