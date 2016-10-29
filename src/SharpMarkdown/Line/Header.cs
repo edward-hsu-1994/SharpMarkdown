@@ -5,21 +5,16 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace SharpMarkdown.Paragraph {
+namespace SharpMarkdown.Line {
     /// <summary>
     /// Markdown標題
     /// </summary>
     [Match(Regex = @"#+\s+.+")]
-    public class Header : Content{
+    public class Header : Paragraph{
         /// <summary>
         /// 階層
         /// </summary>
         public int Level { get; set; }
-
-        /// <summary>
-        /// 內容
-        /// </summary>
-        public List<Content> Children { get; set; } = new List<Content>();
         
         public override string OuterMarkdown {
             get {

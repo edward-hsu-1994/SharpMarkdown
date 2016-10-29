@@ -9,16 +9,17 @@ namespace SharpMarkdown.Line {
     [Match(Regex = @"^\+\.\s+.+$")]
     [Match(Regex = @"^\+\.\s+.+$")]
     [Match(Regex = @"^\*\.\s+.+$")]
-    public class ListItem : Content{
+    public class ListItem : Paragraph{
         public string Symbol { get; set; }
-        public string Text { get; set; }
 
         public override string OuterMarkdown {
             get {
-                return $"{Symbol} {Text}";
+                return $"{Symbol} {string.Join("",Children.Select(x=>x.OuterMarkdown))}";
             }
             set {
-                base.OuterMarkdown = value;
+                ListItem listItem = Parse(value);
+                this.Symbol = listItem.Symbol;
+                this.Children = listItem.Children;
             }
         }
 
@@ -32,7 +33,7 @@ namespace SharpMarkdown.Line {
             try {
                 return new ListItem() {
                     Symbol = splited[0],
-                    Text = splited[1]
+                    Children = Content.InlineParse(splited[1])
                 };
             }catch {
                 throw new FormatException();
