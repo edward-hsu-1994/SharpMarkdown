@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Reflection;
 using SharpMarkdown.Inline;
+using SharpMarkdown.Line;
 
 namespace SharpMarkdown {
     /// <summary>
@@ -36,7 +37,16 @@ namespace SharpMarkdown {
 
         public static List<Type> InlineTypes = new List<Type>(
             new Type[] {
-                typeof(Bold),typeof(Link),typeof(Code),typeof(AutoLink)
+                typeof(AutoLink), typeof(Bold),
+                typeof(Code),typeof(Delete),
+                typeof(Italic),typeof(Link),
+                typeof(Image)
+            });
+
+        public static List<Type> LineTypes = new List<Type>(
+            new Type[] {
+                typeof(Blockquotes),typeof(Divider),typeof(Header),
+                typeof(ListItem),typeof(Tag)
             });
         public static List<ContentBase> InlineParse(string text) {
             List<ContentBase> result = new List<ContentBase>();
