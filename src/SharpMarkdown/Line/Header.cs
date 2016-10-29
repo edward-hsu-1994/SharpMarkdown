@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-
+using SharpMarkdown.Inline;
 namespace SharpMarkdown.Line {
     /// <summary>
     /// Markdown標題

@@ -1,4 +1,5 @@
 ﻿using SharpMarkdown.Attributes;
+using SharpMarkdown.Inline;
 using System;
 using System.Collections.Generic;
 using System.Linq;

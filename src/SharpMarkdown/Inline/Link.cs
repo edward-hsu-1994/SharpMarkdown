@@ -36,7 +36,10 @@ namespace SharpMarkdown.Inline {
                 return result;
             }
             set {
-                base.OuterMarkdown = value;
+                int temp = 0;
+                Link autoLink = Parse(value, out temp);
+                this.Text = autoLink.Text;
+                this.URL = autoLink.URL;
             }
         }
 

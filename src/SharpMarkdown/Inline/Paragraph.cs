@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SharpMarkdown.Line {
+namespace SharpMarkdown.Inline {
     public class Paragraph : Content{
         public List<Content> Children { get; set; } = new List<Content>();
 

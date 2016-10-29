@@ -36,7 +36,7 @@ namespace SharpMarkdown {
 
         public static List<Type> InlineTypes = new List<Type>(
             new Type[] {
-                typeof(Bold),typeof(Link)
+                typeof(Bold),typeof(Link),typeof(Code),typeof(AutoLink)
             });
         public static List<Content> InlineParse(string text) {
             List<Content> result = new List<Content>();
