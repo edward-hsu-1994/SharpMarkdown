@@ -20,7 +20,7 @@ namespace SharpMarkdown {
         public virtual string OuterMarkdown { get; set; }
 
         protected Match GetMatch(string text) {
-            return MatchAttribute.GetMatchAttributes<ListItem>()
+            return MatchAttribute.GetMatchAttributes(GetType())
                 .Select(x => new {
                     match = x.GetRegex().IsMatch(text),
                     attr = x
@@ -61,8 +61,7 @@ namespace SharpMarkdown {
             new Type[] {
                 //typeof(BlockquotesItem),
                 typeof(Divider),typeof(Header),
-                typeof(ListItem),typeof(Tag),
-                typeof(Content)
+                typeof(Tag),typeof(Content)                
             });
 
         public static List<Type> AreaTypes = new List<Type>(
@@ -72,7 +71,7 @@ namespace SharpMarkdown {
                 typeof(CodeArea)
             });
 
-        public static List<ContentBase> Parse(string text, bool inline = false) {
+        public static Content Parse(string text, bool inline = false) {
             List<ContentBase> result = new List<ContentBase>();
             text = text.Trim().Replace("\r","");
 
@@ -110,7 +109,7 @@ namespace SharpMarkdown {
                 }
                 text = new string(text.Skip(skip).ToArray());
             }
-            return result;//.Where(x=>x.OuterMarkdown.Length != 0).ToList();
+            return new Content() { Children = result };//.Where(x=>x.OuterMarkdown.Length != 0).ToList();
         }
         
         public static string ToMarkdown(List<ContentBase> contents, bool inline=false) {

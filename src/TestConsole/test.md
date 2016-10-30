@@ -1,26 +1,15 @@
-﻿  * this one
-  * that one
-  * the other one
+﻿## 簡介
 
-Note that --- not considering the asterisk --- the actual text
-content starts at 4-columns in.
+整合並且分析各大銀行、金融機構所發行信用卡資訊，幫助消費者快速比較各家信用卡的各種回饋，找到最適合自己的信用卡，省下在茫茫卡海裡尋找、篩選所花的時間。
 
-dfadfa
+## 提案內容
 
+1.**發現問題**：當消費者在使用信用卡的同時，往往不知道該使用哪張信用卡，來得到最有利的回饋
 
-> Block quotes are
-> written like so.
->
-> They can span multiple paragraphs,
-> if you like.
+2.**解決問題**：雖然市面上可能已經有其他類似的APP，但是大多都是以客觀角度(列出所有信用卡的訊息內容)為主，還是需要由消費者逐一查詢所持有的信用卡發卡公司的個別優惠與現金折扣、活動等等，所以我們希望以主觀的角度(針對使用者已持有的信用卡進行分析)來提供消費者便利又客製化的APP。
 
-## ddd
-Use 3 dashes for an em-dash. Use 2 dashes for ranges (ex., "it's all
-in chapters 12--14"). Three dots ... will be converted to an ellipsis.
-Unicode is supported. ☺
+3.**展現創意**：
 
-```javascript
-var test = 1+2+3;
-//```
-```
-dfadsfasdfasdf
+APP的主要功能—智慧選卡功能：
+
+先請使用者輸入其持有的信用卡，初始輸入僅內容包括：發卡銀行、信用卡別、結帳日期，透過我們APP蒐集各家發卡銀行的優惠資訊，替使用者進行分析並記錄消費資料。本系統可提供使用者在進行某類消費時，該用哪一張信用卡，才能獲得最佳的優惠並管理各張信用卡的消費，透過消費紀錄的累積，可以更精確地分析消費者的消費行為，提供更正確的刷卡建議。

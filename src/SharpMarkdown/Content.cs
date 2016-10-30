@@ -13,7 +13,8 @@ namespace SharpMarkdown {
         public bool IsSingleLine {
             get {
                 return Children.All(x => {
-                    return x.GetType().Namespace.Split('.').Last() == nameof(Inline);
+                    var NS = x.GetType().Namespace.Split('.').Last();
+                    return NS != nameof(Area) && NS != nameof(Line);
                 });
             }
         }
@@ -23,17 +24,16 @@ namespace SharpMarkdown {
                 return ToMarkdown(Children, IsSingleLine);
             }
             set {
-                Children = ContentBase.Parse(value.Trim());
+                Children = ContentBase.Parse(value.Trim()).Children;
             }
         }    
         
         public static Content Parse(string text, out int length) {
-            //var temp = new string(text.TakeWhile(x=> x!= '\n').ToArray());
             var lines = text.Split('\n');
             var temp = lines.FirstOrDefault() ?? "";
-            length = temp.Length+1;
+            length = temp.Length + 1;
             Content result = new Content();
-            result.Children = ContentBase.Parse(temp,true);
+            result.Children = ContentBase.Parse(temp,true).Children;
             return result;
         }
     }

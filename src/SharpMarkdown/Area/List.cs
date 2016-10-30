@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SharpMarkdown.Area {
-    [Match(Regex = @"^(\s*\d+\.\s+.+((\r?\n)|$))+")]
+    [Match(Regex = @"^(\s*\d+\.\s*.+((\r?\n)|$))+")]
     [Match(Regex = @"^(\s*\*\s+.+((\r?\n)|$))+")]
     [Match(Regex = @"^(\s*\+\s+.+((\r?\n)|$))+")]
     [Match(Regex = @"^(\s*\-\s+.+((\r?\n)|$))+")]
@@ -39,21 +39,24 @@ namespace SharpMarkdown.Area {
             Match match = attrs.Where(x => x.match)
                 .FirstOrDefault().attr
                 .GetRegex().Match(text);
-
+            bool? isNumber = null;
             var items = string.Join("\n", 
                     match.Value.Replace("\r", "")
-                    .Split('\n')   
+                    .Split(new char[] { '\n' },StringSplitOptions.RemoveEmptyEntries)   
                     .Select(x => {
-                        Regex regex = new Regex(@"\s*((\d+.)|\*|\+|\-)+\s*");
+                        Regex regex = new Regex(@"\s*((\d+\.)|\*+|\++|\-+)\s*");
                         var temp = regex.Match(x);
+                        if (!isNumber.HasValue) {
+                            isNumber = new Regex(@"\d+").IsMatch(temp.Value.Trim());
+                        }
                         return x.Substring(temp.Index + temp.Length);
                     })
                 ).Trim().Split(new char[] { '\n' },StringSplitOptions.RemoveEmptyEntries)
-                .Select(x=>new Content() { Children = Content.Parse(x) })
+                .Select(x=>new Content() { Children = Content.Parse(x).Children })
                 .ToList<ContentBase>();
 
             result.Children = items;
-            
+            result.Type = isNumber.Value ? ListTypes.Number : ListTypes.Symbol;
             length = match.Index + match.Length;
             return result;
         }
