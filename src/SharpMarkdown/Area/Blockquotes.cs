@@ -40,7 +40,7 @@ namespace SharpMarkdown.Area {
                     return x.Substring(temp.Index + temp.Length);
                 })).Trim();
 
-            result.Children = Content.Parse(text2);
+            result.Children = Content.Parse(text2).Children;
             
             length = match.Index + match.Length;
             return result;
