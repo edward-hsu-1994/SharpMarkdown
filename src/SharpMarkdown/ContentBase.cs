@@ -68,7 +68,8 @@ namespace SharpMarkdown {
         public static List<Type> AreaTypes = new List<Type>(
             new Type[] {
                 typeof(List),
-                typeof(Blockquotes)
+                typeof(Blockquotes),
+                typeof(CodeArea)
             });
 
         public static List<ContentBase> Parse(string text, bool inline = false) {

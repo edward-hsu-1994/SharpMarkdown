@@ -13,6 +13,8 @@ namespace TestConsole {
         public static void Main(string[] args) {
             var text = System.IO.File.ReadAllText("test.md");
             var p = Content.Parse(text);
+            var temp = new Content() { Children = p };
+            string text2 = temp.OuterMarkdown;
         }
     }
 }

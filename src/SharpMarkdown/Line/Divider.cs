@@ -13,7 +13,7 @@ namespace SharpMarkdown.Line {
     public class Divider : ContentBase {
         public override string OuterMarkdown {
             get {
-                return "-----";
+                return "-----\n";
             }
             set {
                 int temp = 0;

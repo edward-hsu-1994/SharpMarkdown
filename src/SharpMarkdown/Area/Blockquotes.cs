@@ -11,7 +11,9 @@ namespace SharpMarkdown.Area {
     public class Blockquotes : Content {
         public override string OuterMarkdown {
             get {
-                return string.Join("\n", Children.Select(x => "> " + x.OuterMarkdown));
+                return "\n" + 
+                    string.Join("\n\n", Children.Select(x => "> " + x.OuterMarkdown)) +
+                    "\n\n";
             }
             set {
                 int temp = 0;

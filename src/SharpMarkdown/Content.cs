@@ -12,7 +12,7 @@ namespace SharpMarkdown {
 
         public override string OuterMarkdown {
             get {
-                return string.Join("", Children.Select(x => x.OuterMarkdown));
+                return string.Join("", Children.Select(x => x.OuterMarkdown)).Trim();
             }
             set {
                 Children = ContentBase.Parse(value.Trim());
