@@ -20,7 +20,7 @@ namespace SharpMarkdown.Line {
 
         public override string OuterMarkdown {
             get {
-                return $"{Symbol} {string.Join("",Children.Select(x=>x.OuterMarkdown))}\n";
+                return $"{Symbol} {string.Join("",Children.Select(x=>x.OuterMarkdown))}";
             }
             set {
                 int temp = 0;

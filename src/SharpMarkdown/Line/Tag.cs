@@ -18,7 +18,7 @@ namespace SharpMarkdown.Line {
                 if (!string.IsNullOrWhiteSpace(Optional)) {
                     result += $"\"{Optional}\"";
                 }
-                return result + "\n";
+                return result;
             }
             set {
                 int temp = 0;

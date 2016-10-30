@@ -16,10 +16,10 @@ namespace SharpMarkdown.Area {
 
         public override string OuterMarkdown {
             get {
-                return "\n\n" + string.Join("\n", Children.Select((x,i) => {
+                return string.Join("\n", Children.Select((x,i) => {
                     return (Type == ListTypes.Number ? ((i + 1) + ". ") : "* ") +
                         x.OuterMarkdown;
-                })) + "\n\n";
+                }));
             }
             set {
                 int temp = 0;

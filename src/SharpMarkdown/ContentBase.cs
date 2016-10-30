@@ -110,7 +110,18 @@ namespace SharpMarkdown {
                 }
                 text = new string(text.Skip(skip).ToArray());
             }
-            return result.Where(x=>x.OuterMarkdown.Length != 0).ToList();
+            return result;//.Where(x=>x.OuterMarkdown.Length != 0).ToList();
+        }
+        
+        public static string ToMarkdown(List<ContentBase> contents, bool inline=false) {
+            string result = "";
+            foreach (var content in contents) {
+                result += content.OuterMarkdown;
+                if (!inline) {
+                    result += "\n";
+                }
+            }
+            return result.Trim();
         }
     }
 }

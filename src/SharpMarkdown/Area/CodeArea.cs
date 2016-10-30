@@ -15,8 +15,8 @@ namespace SharpMarkdown.Area {
 
         public override string OuterMarkdown {
             get {
-                return "\n\n```" + Language + "\n" +
-                    Code + "\n```\n\n";
+                return "```" + Language + "\n" +
+                    Code + "\n```";
             }
             set {
                 base.OuterMarkdown = value;

@@ -10,9 +10,17 @@ namespace SharpMarkdown {
     public class Content : ContentBase{
         public List<ContentBase> Children { get; set; } = new List<ContentBase>();
 
+        public bool IsSingleLine {
+            get {
+                return Children.All(x => {
+                    return x.GetType().Namespace.Split('.').Last() == nameof(Inline);
+                });
+            }
+        }
+
         public override string OuterMarkdown {
             get {
-                return string.Join("", Children.Select(x => x.OuterMarkdown)).Trim();
+                return ToMarkdown(Children, IsSingleLine);
             }
             set {
                 Children = ContentBase.Parse(value.Trim());
