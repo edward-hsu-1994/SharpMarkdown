@@ -13,7 +13,7 @@ namespace SharpMarkdown.Inline {
                     + "~~";
             }
             set {
-                Children = ContentBase.AreaParse(value.Trim());
+                Children = ContentBase.Parse(value.Trim());
             }
         }
 
@@ -31,7 +31,7 @@ namespace SharpMarkdown.Inline {
 
             length = match.Index + match.Length;
             text = match.Value.Substring(2, match.Value.Length - 4);
-            return new Delete() { Children = ContentBase.AreaParse(text) };
+            return new Delete() { Children = ContentBase.Parse(text) };
         }
     }
 }

@@ -15,7 +15,7 @@ namespace SharpMarkdown {
                 return string.Join("", Children.Select(x => x.OuterMarkdown));
             }
             set {
-                Children = ContentBase.AreaParse(value.Trim());
+                Children = ContentBase.Parse(value.Trim());
             }
         }    
         

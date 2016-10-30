@@ -47,7 +47,7 @@ namespace SharpMarkdown.Line {
                 length = match.Index + match.Length;
                 return new Header() {
                     Level = headerText.Length,
-                    Children = ContentBase.AreaParse(match.Value.Replace(headerText, "").Trim())
+                    Children = ContentBase.Parse(match.Value.Replace(headerText, "").Trim())
                 };
             }catch(Exception e) {
                 throw new FormatException();

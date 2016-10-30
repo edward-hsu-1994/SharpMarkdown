@@ -47,7 +47,7 @@ namespace SharpMarkdown.Line {
                 length = match.Index + match.Length;
                 return new ListItem() {
                     Symbol = splited[0],
-                    Children = ContentBase.AreaParse(splited[1])
+                    Children = ContentBase.Parse(splited[1])
                 };
             }catch {
                 throw new FormatException();
