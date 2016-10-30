@@ -29,6 +29,17 @@ namespace SharpMarkdown.Area{
             }
         }
 
+        public Section[] GetAllSubsections() {
+            List<Section> result = new List<Section>();
+            foreach(var section in Children) {
+                if (!(section is Section)) continue;
+                Section s = (Section)section;
+                result.Add(s);
+                result.AddRange(s.GetAllSubsections());
+            }
+            return result.ToArray();
+        }
+
         public static Section Parse(List<ContentBase> contents,int level = 1) {
             var result = new Section();
             if (contents.Count == 0) return result;
