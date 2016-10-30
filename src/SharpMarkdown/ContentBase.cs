@@ -120,7 +120,7 @@ namespace SharpMarkdown {
                     result += "\n";
                 }
             }
-            return result.Trim();
+            return result;
         }
     }
 }
