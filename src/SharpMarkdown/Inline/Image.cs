@@ -40,6 +40,12 @@ namespace SharpMarkdown.Inline {
             }
         }
 
+        public override string OuterText {
+            get {
+                return Text;
+            }
+        }
+
         public static Image Parse(string text, out int length) {
             var attrs = MatchAttribute.GetMatchAttributes<Image>()
                 .Select(x => new {

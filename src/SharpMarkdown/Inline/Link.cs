@@ -44,6 +44,12 @@ namespace SharpMarkdown.Inline {
             }
         }
 
+        public override string OuterText {
+            get {
+                return Text;
+            }
+        }
+
         public static Link Parse(string text,out int length ) {
             var attrs = MatchAttribute.GetMatchAttributes<Link>()
                 .Select(x => new {

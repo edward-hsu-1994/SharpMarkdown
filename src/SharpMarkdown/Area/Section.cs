@@ -8,11 +8,24 @@ namespace SharpMarkdown.Area{
     public class Section : Content {
         public Header Header { get; set; }
 
+        public string HeaderText {
+            get {
+                return Header?.OuterText;
+            }
+        }
+
         public override string OuterMarkdown {
             get {
                 List<ContentBase> temp = new List<ContentBase>(Children);
                 if(Header != null)temp.Insert(0, Header);
                 return Content.ToMarkdown(temp);
+            }
+        }
+        public override string OuterText {
+            get {
+                List<ContentBase> temp = new List<ContentBase>(Children);
+                if (Header != null) temp.Insert(0, Header);
+                return Content.ToText(temp);
             }
         }
 

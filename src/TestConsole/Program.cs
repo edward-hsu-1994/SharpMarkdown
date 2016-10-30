@@ -14,6 +14,7 @@ namespace TestConsole {
             var text = System.IO.File.ReadAllText("test.md");
             var p = Content.Parse(text);
             var c = Section.FromContent(p);
+            var all = c.GetAllSubsections();
             string text2 = p.OuterMarkdown;
             string text3 = c.OuterMarkdown;
         }

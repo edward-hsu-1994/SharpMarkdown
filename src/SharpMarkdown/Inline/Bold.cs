@@ -18,8 +18,7 @@ namespace SharpMarkdown.Inline {
                 Children = ContentBase.Parse(value.Trim()).Children;
             }
         }
-
-
+        
         public static Bold Parse(string text, out int length) {
             var attrs = MatchAttribute.GetMatchAttributes<Bold>()
                 .Select(x => new {

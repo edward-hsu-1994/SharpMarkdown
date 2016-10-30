@@ -28,6 +28,15 @@ namespace SharpMarkdown.Area {
             }
         }
 
+        public override string OuterText {
+            get {
+                return string.Join("\n", Children.Select((x, i) => {
+                    return (Type == ListTypes.Number ? ((i + 1) + ". ") : "* ") +
+                        x.OuterMarkdown;
+                }));
+            }
+        }
+
         public static List Parse(string text, out int length) {
             var attrs = MatchAttribute.GetMatchAttributes<List>()
                 .Select(x => new {

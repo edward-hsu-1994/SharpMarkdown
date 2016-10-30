@@ -20,6 +20,13 @@ namespace SharpMarkdown.Line {
                 Parse(value, out temp);
             }
         }
+
+        public override string OuterText {
+            get {
+                return "";
+            }
+        }
+
         public static Divider Parse(string text, out int length) {
             var attrs = MatchAttribute.GetMatchAttributes<Divider>()
                 .Select(x => new {

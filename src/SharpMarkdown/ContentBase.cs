@@ -19,6 +19,12 @@ namespace SharpMarkdown {
         /// </summary>
         public virtual string OuterMarkdown { get; set; }
 
+        public virtual string OuterText {
+            get {
+                return OuterMarkdown;
+            }
+        }
+
         protected Match GetMatch(string text) {
             return MatchAttribute.GetMatchAttributes(GetType())
                 .Select(x => new {
@@ -116,6 +122,17 @@ namespace SharpMarkdown {
             string result = "";
             foreach (var content in contents) {
                 result += content.OuterMarkdown;
+                if (!inline) {
+                    result += "\n";
+                }
+            }
+            return result;
+        }
+
+        public static string ToText(List<ContentBase> contents, bool inline = false) {
+            string result = "";
+            foreach (var content in contents) {
+                result += content.OuterText;
                 if (!inline) {
                     result += "\n";
                 }

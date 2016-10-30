@@ -21,6 +21,12 @@ namespace SharpMarkdown.Inline {
             }
         }
 
+        public override string OuterText {
+            get {
+                return Text;
+            }
+        }
+
         public static Code Parse(string text, out int length) {
             var attrs = MatchAttribute
                 .GetMatchAttributes<Code>()

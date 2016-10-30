@@ -29,6 +29,12 @@ namespace SharpMarkdown.Line {
             }
         }
 
+        public override string OuterText {
+            get {
+                return "";
+            }
+        }
+
         public static Tag Parse(string text,out int length) {
             try {
 

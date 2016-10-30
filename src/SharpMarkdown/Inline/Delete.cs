@@ -17,7 +17,6 @@ namespace SharpMarkdown.Inline {
             }
         }
 
-
         public static Delete Parse(string text, out int length) {
             var attrs = MatchAttribute.GetMatchAttributes<Delete>()
                 .Select(x => new {

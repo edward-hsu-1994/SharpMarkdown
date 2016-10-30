@@ -24,6 +24,12 @@ namespace SharpMarkdown.Inline {
             }
         }
 
+        public override string OuterText {
+            get {
+                return URL;
+            }
+        }
+
         public static AutoLink Parse(string text,out int length) {
             var attrs = MatchAttribute.GetMatchAttributes<AutoLink>()
                 .Select(x => new {

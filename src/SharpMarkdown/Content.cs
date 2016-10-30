@@ -26,8 +26,13 @@ namespace SharpMarkdown {
             set {
                 Children = ContentBase.Parse(value.Trim()).Children;
             }
-        }    
-        
+        }
+        public override string OuterText {
+            get {
+                return ToText(Children, IsSingleLine);
+            }
+        }
+
         public static Content Parse(string text, out int length) {
             var lines = text.Split('\n');
             var temp = lines.FirstOrDefault() ?? "";
