@@ -70,7 +70,7 @@ namespace SharpMarkdown {
                 typeof(List),
                 typeof(Blockquotes)
             });
-        public static List<ContentBase> InlineParse(string text) {
+        public static List<ContentBase> InlineP0arse(string text) {
             List<ContentBase> result = new List<ContentBase>();
             string temp = text;
             while (temp.Length > 0) {
@@ -226,14 +226,15 @@ namespace SharpMarkdown {
             return result.Where(x=>x.OuterMarkdown.Trim().Length != 0).ToList();
         }
 
-        
-        public static List<ContentBase> Parse(string text) {
+
+
+        public static List<ContentBase> Parse(string text, bool inline = false) {
             List<ContentBase> result = new List<ContentBase>();
             text = text.Trim().Replace("\r","");
 
-            var types = AreaTypes.Concat(LineTypes);
+            var types = inline ? InlineTypes : AreaTypes.Concat(LineTypes);
 
-            for (; text.Length>0;) {
+            while (text.Length>0) {
                 int skip = 0;
                 //剖析引用參數
                 object[] args = new object[] { text, 0 };
@@ -248,6 +249,20 @@ namespace SharpMarkdown {
                     
                     skip = (int)args[1];
                     break;
+                }
+                if (inline && skip == 0) {//行內檢驗
+                    skip = 1;
+                    string addChar = text[0].ToString();
+                    if(text[0] == '\\') {
+                        skip = 2;
+                        addChar = new string(text.Take(2).ToArray());
+                    }
+                    var lastChild = result.LastOrDefault();
+                    if (lastChild?.GetType() == typeof(ContentBase)) {
+                        lastChild.OuterMarkdown += addChar;
+                    }else {
+                        result.Add(new ContentBase() { OuterMarkdown = addChar });
+                    }
                 }
                 text = new string(text.Skip(skip).ToArray());
             }

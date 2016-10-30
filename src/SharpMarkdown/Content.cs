@@ -25,7 +25,7 @@ namespace SharpMarkdown {
             var temp = lines.FirstOrDefault() ?? "";
             length = temp.Length+1;
             Content result = new Content();
-            result.Children = ContentBase.InlineParse(temp);
+            result.Children = ContentBase.Parse(temp,true);
             return result;
         }
     }
