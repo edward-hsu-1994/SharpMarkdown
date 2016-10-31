@@ -10,7 +10,7 @@ namespace SharpMarkdown.Inline {
     /// 程式碼區塊
     /// </summary>
     [Match(Regex = @"^`.+`")]
-    public class Code : ContentBase {
+    public class Code : MarkdownRaw {
         public string Text { get; set; }
         public override string OuterMarkdown {
             get {

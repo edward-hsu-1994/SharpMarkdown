@@ -9,14 +9,14 @@ namespace SharpMarkdown.Inline {
     /// 刪除線
     /// </summary>
     [Match(Regex = @"^~~.+~~")]
-    public class Delete : Content {
+    public class Delete : Markdown {
         public override string OuterMarkdown {
             get {
                 return "~~" + string.Join("", Children.Select(x => x.OuterMarkdown))
                     + "~~";
             }
             set {
-                Children = ContentBase.Parse(value.Trim()).Children;
+                Children = MarkdownRaw.Parse(value.Trim()).Children;
             }
         }
 
@@ -33,7 +33,7 @@ namespace SharpMarkdown.Inline {
 
             length = match.Index + match.Length;
             text = match.Value.Substring(2, match.Value.Length - 4);
-            return new Delete() { Children = ContentBase.Parse(text).Children };
+            return new Delete() { Children = MarkdownRaw.Parse(text).Children };
         }
     }
 }

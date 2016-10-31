@@ -10,7 +10,7 @@ namespace SharpMarkdown.Area {
     /// 程式碼區塊
     /// </summary>
     [Match(Regex = "^```.+(\r?\n((?!```)(.|.+```))*)+\r?\n```\r?\n")]
-    public class CodeArea : ContentBase {
+    public class CodeArea : MarkdownRaw {
         /// <summary>
         /// 語言
         /// </summary>

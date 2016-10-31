@@ -12,7 +12,7 @@ namespace TestConsole {
     public class Program {
         public static void Main(string[] args) {
             var text = System.IO.File.ReadAllText("test.md");
-            var mdContent = Content.Parse(text);
+            var mdContent = Markdown.Parse(text);
             var mdSection = mdContent.ToSection();
 
             var temp = SegmentsList(mdSection);
@@ -31,7 +31,7 @@ namespace TestConsole {
                 string[] nextLevel = SegmentsList(child, level + 1);
                 result.AddRange(nextLevel
                     .Where(x => x != null)
-                    .Select(x => new string(' ', level + 1) + x));
+                    .Select(x => ' ' + x));
             }
             if (result.Count != 0 || section.HeaderText?.Length != 0) {
                 result.Insert(0, section.HeaderText);

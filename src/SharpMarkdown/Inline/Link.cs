@@ -12,7 +12,7 @@ namespace SharpMarkdown.Inline {
     /// </summary>
     [Match(Regex = @"^\[.+\]\s*\[.+\]")]
     [Match(Regex = @"^\[.+\]\s*\(.+\)")]
-    public class Link : ContentBase {
+    public class Link : MarkdownRaw {
         /// <summary>
         /// 文字
         /// </summary>

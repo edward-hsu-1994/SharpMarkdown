@@ -14,7 +14,7 @@ namespace SharpMarkdown.Area {
     [Match(Regex = @"^(\s*\*\s+.+((\r?\n)|$))+")]
     [Match(Regex = @"^(\s*\+\s+.+((\r?\n)|$))+")]
     [Match(Regex = @"^(\s*\-\s+.+((\r?\n)|$))+")]
-    public class List : Content {
+    public class List : Markdown {
         /// <summary>
         /// 類型
         /// </summary>
@@ -67,8 +67,8 @@ namespace SharpMarkdown.Area {
                         return x.Substring(temp.Index + temp.Length);
                     })
                 ).Trim().Split(new char[] { '\n' },StringSplitOptions.RemoveEmptyEntries)
-                .Select(x=>new Content() { Children = Content.Parse(x).Children })
-                .ToList<ContentBase>();
+                .Select(x=>new Markdown() { Children = Markdown.Parse(x).Children })
+                .ToList<MarkdownRaw>();
 
             result.Children = items;
             result.Type = isNumber.Value ? ListTypes.Number : ListTypes.Symbol;

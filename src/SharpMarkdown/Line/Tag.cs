@@ -10,7 +10,7 @@ namespace SharpMarkdown.Line {
     /// 參考標籤
     /// </summary>
     [Match(Regex = @"^\[[^\]]+\]:\s*.+([\n\s]|(" + "[\"\'\\(].+[\"\'\\)]" + "))?")]
-    public class Tag : ContentBase{
+    public class Tag : MarkdownRaw{
         /// <summary>
         /// 唯一識別號
         /// </summary>

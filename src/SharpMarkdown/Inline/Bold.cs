@@ -11,14 +11,14 @@ namespace SharpMarkdown.Inline {
     /// </summary>
     [Match(Regex = @"^\*\*[^\*\r\n]+\*\*")]
     [Match(Regex = @"^__[^_\r\n]+__")]
-    public class Bold : Content{
+    public class Bold : Markdown{
         public override string OuterMarkdown {
             get {
                 return "**" + string.Join("",Children.Select(x=>x.OuterMarkdown))
                     + "**";
             }
             set {
-                Children = ContentBase.Parse(value.Trim()).Children;
+                Children = MarkdownRaw.Parse(value.Trim()).Children;
             }
         }
         
@@ -35,7 +35,7 @@ namespace SharpMarkdown.Inline {
 
             length = match.Index + match.Length;
             text = match.Value.Substring(2, match.Value.Length - 4);
-            return new Bold() { Children = ContentBase.Parse(text).Children };
+            return new Bold() { Children = MarkdownRaw.Parse(text).Children };
         }
     }
 }

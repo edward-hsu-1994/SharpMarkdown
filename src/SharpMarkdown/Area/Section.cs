@@ -8,7 +8,7 @@ namespace SharpMarkdown.Area {
     /// <summary>
     /// 章節
     /// </summary>
-    public class Section : Content {
+    public class Section : Markdown {
         /// <summary>
         /// 標題
         /// </summary>
@@ -25,16 +25,16 @@ namespace SharpMarkdown.Area {
 
         public override string OuterMarkdown {
             get {
-                List<ContentBase> temp = new List<ContentBase>(Children);
+                List<MarkdownRaw> temp = new List<MarkdownRaw>(Children);
                 if (Header != null) temp.Insert(0, Header);
-                return Content.ToMarkdown(temp);
+                return Markdown.ToMarkdown(temp);
             }
         }
         public override string OuterText {
             get {
-                List<ContentBase> temp = new List<ContentBase>(Children);
+                List<MarkdownRaw> temp = new List<MarkdownRaw>(Children);
                 if (Header != null) temp.Insert(0, Header);
-                return Content.ToText(temp);
+                return Markdown.ToText(temp);
             }
         }
 
@@ -53,7 +53,7 @@ namespace SharpMarkdown.Area {
             return result.ToArray();
         }
 
-        internal static Section Convert(List<ContentBase> contents, int level = 1) {
+        internal static Section Convert(List<MarkdownRaw> contents, int level = 1) {
             var result = new Section();
             if (contents.Count == 0) return result;
 
@@ -76,13 +76,13 @@ namespace SharpMarkdown.Area {
             if (indexList.First().index != 0) {
                 indexList.Insert(0, new {
                     level = level,
-                    content = default(ContentBase),
+                    content = default(MarkdownRaw),
                     index = 0
                 });
             }
 
             for (int i = 0; i < indexList.Count; i++) {
-                List<ContentBase> sectionContents = null;
+                List<MarkdownRaw> sectionContents = null;
 
                 if (i < indexList.Count - 1) {
                     sectionContents = contents
@@ -109,7 +109,7 @@ namespace SharpMarkdown.Area {
         }
 
         internal static Section ClearSection(Section section) {
-            List<ContentBase> newChildren = new List<ContentBase>();
+            List<MarkdownRaw> newChildren = new List<MarkdownRaw>();
             foreach(var child in section.Children) {
                 var sec = child as Section;
                 if(sec == null) {
@@ -128,11 +128,11 @@ namespace SharpMarkdown.Area {
             }
             return section;
         }
-        public static Section FromContent(Content content) {
+        public static Section FromContent(Markdown content) {
             return ClearSection(Convert(content.Children));
         }
 
-        public static explicit operator Section(List<ContentBase> contents) {
+        public static explicit operator Section(List<MarkdownRaw> contents) {
             return ClearSection(Convert(contents));
         }
     }

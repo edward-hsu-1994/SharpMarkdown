@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace SharpMarkdown {
     [Match(Regex = ".+")]
-    public class Content : ContentBase{
-        public List<ContentBase> Children { get; set; } = new List<ContentBase>();
+    public class Markdown : MarkdownRaw{
+        public List<MarkdownRaw> Children { get; set; } = new List<MarkdownRaw>();
 
         internal bool IsSingleLine {
             get {
@@ -25,7 +25,7 @@ namespace SharpMarkdown {
                 return ToMarkdown(Children, IsSingleLine);
             }
             set {
-                Children = ContentBase.Parse(value.Trim()).Children;
+                Children = MarkdownRaw.Parse(value.Trim()).Children;
             }
         }
         public override string OuterText {
@@ -41,12 +41,12 @@ namespace SharpMarkdown {
         public Section ToSection() {
             return Section.FromContent(this);
         }
-        public static Content Parse(string text, out int length) {
+        public static Markdown Parse(string text, out int length) {
             var lines = text.Split('\n');
             var temp = lines.FirstOrDefault() ?? "";
             length = temp.Length + 1;
-            Content result = new Content();
-            result.Children = ContentBase.Parse(temp,true).Children;
+            Markdown result = new Markdown();
+            result.Children = MarkdownRaw.Parse(temp,true).Children;
             return result;
         }
     }

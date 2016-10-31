@@ -10,14 +10,14 @@ namespace SharpMarkdown.Inline {
     /// </summary>
     [Match(Regex = @"^\*[^\*\r\n]+\*")]
     [Match(Regex = @"^__[^_\r\n]+__")]
-    public class Italic : Content {
+    public class Italic : Markdown {
         public override string OuterMarkdown {
             get {
                 return "*" + string.Join("", Children.Select(x => x.OuterMarkdown))
                     + "*";
             }
             set {
-                Children = ContentBase.Parse(value.Trim()).Children;
+                Children = MarkdownRaw.Parse(value.Trim()).Children;
             }
         }
 
@@ -40,7 +40,7 @@ namespace SharpMarkdown.Inline {
             }
             length = match.Index + match.Length;
             
-            return new Italic() { Children = ContentBase.Parse(text).Children };
+            return new Italic() { Children = MarkdownRaw.Parse(text).Children };
         }
     }
 }

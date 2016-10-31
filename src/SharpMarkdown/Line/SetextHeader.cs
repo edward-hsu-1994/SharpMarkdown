@@ -43,7 +43,7 @@ namespace SharpMarkdown.Line {
                 length = match.Index + match.Length;
                 return new SetextHeader() {
                     Level = sy == '=' ? 1 : 0,
-                    Children = ContentBase.Parse(headerText).Children
+                    Children = MarkdownRaw.Parse(headerText).Children
                 };
             }catch(Exception e) {
                 throw new FormatException();

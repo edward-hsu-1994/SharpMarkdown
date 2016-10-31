@@ -13,7 +13,7 @@ namespace SharpMarkdown.Line {
     [Match(Regex = @"^-{3,}(\r?\n)")]
     [Match(Regex = @"^\*{3,}$")]
     [Match(Regex = @"^\*{3,}(\r?\n)")]
-    public class Divider : ContentBase {
+    public class Divider : MarkdownRaw {
         public override string OuterMarkdown {
             get {
                 return "-----";

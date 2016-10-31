@@ -11,7 +11,7 @@ namespace SharpMarkdown.Area {
     /// 引言區域
     /// </summary>
     [Match(Regex = @"^(>\s?(>\s?)*.+((\r?\n)|$))+")]
-    public class Blockquotes : Content {
+    public class Blockquotes : Markdown {
         public override string OuterMarkdown {
             get {
                 return 
@@ -43,7 +43,7 @@ namespace SharpMarkdown.Area {
                     return x.Substring(temp.Index + temp.Length);
                 })).Trim();
 
-            result.Children = Content.Parse(text2).Children;
+            result.Children = Markdown.Parse(text2).Children;
 
             length = match.Index + match.Length;
             return result;

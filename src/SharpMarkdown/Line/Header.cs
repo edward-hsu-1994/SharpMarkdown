@@ -10,7 +10,7 @@ namespace SharpMarkdown.Line {
     /// 標題
     /// </summary>
     [Match(Regex = @"^([\t\f]*#)+\s+.+(\r?\n|$)")]
-    public class Header : Content{
+    public class Header : Markdown{
         /// <summary>
         /// 階層
         /// </summary>
@@ -48,7 +48,7 @@ namespace SharpMarkdown.Line {
                 length = match.Index + match.Length;
                 return new Header() {
                     Level = headerText.Length,
-                    Children = ContentBase.Parse(match.Value.Replace(headerText, "")
+                    Children = MarkdownRaw.Parse(match.Value.Replace(headerText, "")
                     .Trim()).Children
                 };
             }catch(Exception e) {
