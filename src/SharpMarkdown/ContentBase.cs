@@ -19,6 +19,9 @@ namespace SharpMarkdown {
         /// </summary>
         public virtual string OuterMarkdown { get; set; }
 
+        /// <summary>
+        /// 外顯文字內容
+        /// </summary>
         public virtual string OuterText {
             get {
                 return OuterMarkdown;
@@ -35,8 +38,7 @@ namespace SharpMarkdown {
                 .FirstOrDefault()
                 ?.attr.GetRegex().Match(text);
         }
-
-
+        
         /// <summary>
         /// 隱含轉換<see cref="string"/>為<see cref="ContentBase"/>內容
         /// </summary>
@@ -54,7 +56,9 @@ namespace SharpMarkdown {
             return content?.OuterMarkdown;
         }
 
-
+        /// <summary>
+        /// 行內樣式
+        /// </summary>
         public static List<Type> InlineTypes = new List<Type>(
             new Type[] {
                 typeof(AutoLink), typeof(Bold),
@@ -63,6 +67,9 @@ namespace SharpMarkdown {
                 typeof(Image)
             });
 
+        /// <summary>
+        /// 行樣式
+        /// </summary>
         public static List<Type> LineTypes = new List<Type>(
             new Type[] {
                 //typeof(BlockquotesItem),
@@ -70,6 +77,9 @@ namespace SharpMarkdown {
                 typeof(Tag),typeof(Content)                
             });
 
+        /// <summary>
+        /// 多行樣式
+        /// </summary>
         public static List<Type> AreaTypes = new List<Type>(
             new Type[] {
                 typeof(List),
@@ -77,6 +87,12 @@ namespace SharpMarkdown {
                 typeof(CodeArea)
             });
 
+        /// <summary>
+        /// 將Markdown字串轉換為Markdown Content
+        /// </summary>
+        /// <param name="text">Markdown本文</param>
+        /// <param name="inline">是否為單一行</param>
+        /// <returns>Markdown Content</returns>
         public static Content Parse(string text, bool inline = false) {
             List<ContentBase> result = new List<ContentBase>();
             text = text.Trim().Replace("\r","");
@@ -118,7 +134,7 @@ namespace SharpMarkdown {
             return new Content() { Children = result };//.Where(x=>x.OuterMarkdown.Length != 0).ToList();
         }
         
-        public static string ToMarkdown(List<ContentBase> contents, bool inline=false) {
+        internal static string ToMarkdown(List<ContentBase> contents, bool inline=false) {
             string result = "";
             foreach (var content in contents) {
                 result += content.OuterMarkdown;
@@ -128,8 +144,7 @@ namespace SharpMarkdown {
             }
             return result;
         }
-
-        public static string ToText(List<ContentBase> contents, bool inline = false) {
+        internal static string ToText(List<ContentBase> contents, bool inline = false) {
             string result = "";
             foreach (var content in contents) {
                 result += content.OuterText;

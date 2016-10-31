@@ -6,6 +6,9 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SharpMarkdown.Line {
+    /// <summary>
+    /// 分隔線
+    /// </summary>
     [Match(Regex = @"^-{3,}$")]
     [Match(Regex = @"^-{3,}(\r?\n)")]
     [Match(Regex = @"^\*{3,}$")]

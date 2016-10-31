@@ -6,11 +6,29 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SharpMarkdown.Line {
+    /// <summary>
+    /// 參考標籤
+    /// </summary>
     [Match(Regex = @"^\[[^\]]+\]:\s*.+([\n\s]|(" + "[\"\'\\(].+[\"\'\\)]" + "))?")]
     public class Tag : ContentBase{
+        /// <summary>
+        /// 唯一識別號
+        /// </summary>
         public string Id { get; set; }
+
+        /// <summary>
+        /// 超連結
+        /// </summary>
         public string URL { get; set; }
+
+        /// <summary>
+        /// 選擇項目
+        /// </summary>
         public string Optional { get; set; }
+
+        /// <summary>
+        /// 是否為參考項目
+        /// </summary>
         public bool IsRef { get; set; }
         public override string OuterMarkdown {
             get {

@@ -7,6 +7,9 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SharpMarkdown.Inline {
+    /// <summary>
+    /// 圖片
+    /// </summary>
     [Match(Regex = @"^!\[.+\]\s*\[.+\]")]
     [Match(Regex = @"^!\[.+\]\s*\(.+\)")]
     public class Image : ContentBase {

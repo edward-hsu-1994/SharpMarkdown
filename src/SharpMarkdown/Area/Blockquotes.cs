@@ -7,6 +7,9 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SharpMarkdown.Area {
+    /// <summary>
+    /// 引言區域
+    /// </summary>
     [Match(Regex = @"^(>\s?(>\s?)*.+((\r?\n)|$))+")]
     public class Blockquotes : Content {
         public override string OuterMarkdown {
@@ -33,7 +36,7 @@ namespace SharpMarkdown.Area {
                 .FirstOrDefault().attr
                 .GetRegex().Match(text);
 
-            string text2 = string.Join("\n", match.Value.Replace("\r", "").Split('\n')                
+            string text2 = string.Join("\n", match.Value.Replace("\r", "").Split('\n')
                 .Select(x => {
                     Regex regex = new Regex(@"\s*>\s?");
                     var temp = regex.Match(x);
@@ -41,7 +44,7 @@ namespace SharpMarkdown.Area {
                 })).Trim();
 
             result.Children = Content.Parse(text2).Children;
-            
+
             length = match.Index + match.Length;
             return result;
         }

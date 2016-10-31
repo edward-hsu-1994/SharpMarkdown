@@ -5,6 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace SharpMarkdown.Inline {
+    /// <summary>
+    /// 斜體
+    /// </summary>
     [Match(Regex = @"^\*[^\*\r\n]+\*")]
     [Match(Regex = @"^__[^_\r\n]+__")]
     public class Italic : Content {

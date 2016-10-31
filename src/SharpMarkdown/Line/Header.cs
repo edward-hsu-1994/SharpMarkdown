@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using SharpMarkdown.Inline;
 namespace SharpMarkdown.Line {
     /// <summary>
-    /// Markdown標題
+    /// 標題
     /// </summary>
     [Match(Regex = @"^([\t\f]*#)+\s+.+(\r?\n|$)")]
     public class Header : Content{
@@ -16,6 +16,7 @@ namespace SharpMarkdown.Line {
         /// </summary>
         public int Level { get; set; }
         
+
         public override string OuterMarkdown {
             get {
                 return new string('#', Level) + " " + 

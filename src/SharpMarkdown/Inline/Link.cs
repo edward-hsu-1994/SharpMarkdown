@@ -7,6 +7,9 @@ using SharpMarkdown.Line;
 using SharpMarkdown.Attributes;
 
 namespace SharpMarkdown.Inline {
+    /// <summary>
+    /// 連結
+    /// </summary>
     [Match(Regex = @"^\[.+\]\s*\[.+\]")]
     [Match(Regex = @"^\[.+\]\s*\(.+\)")]
     public class Link : ContentBase {

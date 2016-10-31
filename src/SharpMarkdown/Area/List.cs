@@ -7,11 +7,17 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SharpMarkdown.Area {
+    /// <summary>
+    /// 清單
+    /// </summary>
     [Match(Regex = @"^(\s*\d+\.\s*.+((\r?\n)|$))+")]
     [Match(Regex = @"^(\s*\*\s+.+((\r?\n)|$))+")]
     [Match(Regex = @"^(\s*\+\s+.+((\r?\n)|$))+")]
     [Match(Regex = @"^(\s*\-\s+.+((\r?\n)|$))+")]
     public class List : Content {
+        /// <summary>
+        /// 類型
+        /// </summary>
         public ListTypes Type { get; set; }
 
         public override string OuterMarkdown {

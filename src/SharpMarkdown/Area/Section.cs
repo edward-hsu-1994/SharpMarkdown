@@ -5,9 +5,18 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace SharpMarkdown.Area{
+    /// <summary>
+    /// 章節
+    /// </summary>
     public class Section : Content {
+        /// <summary>
+        /// 標題
+        /// </summary>
         public Header Header { get; set; }
 
+        /// <summary>
+        /// 標題文字
+        /// </summary>
         public string HeaderText {
             get {
                 return Header?.OuterText;
@@ -29,6 +38,10 @@ namespace SharpMarkdown.Area{
             }
         }
 
+        /// <summary>
+        /// 取得所有子章節列表
+        /// </summary>
+        /// <returns>子章節列表</returns>
         public Section[] GetAllSubsections() {
             List<Section> result = new List<Section>();
             foreach(var section in Children) {
@@ -97,6 +110,5 @@ namespace SharpMarkdown.Area{
         public static explicit operator Section(List<ContentBase> contents) {
             return Parse(contents);
         }
-        
     }
 }

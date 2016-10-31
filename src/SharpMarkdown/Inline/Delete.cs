@@ -5,6 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace SharpMarkdown.Inline {
+    /// <summary>
+    /// 刪除線
+    /// </summary>
     [Match(Regex = @"^~~.+~~")]
     public class Delete : Content {
         public override string OuterMarkdown {

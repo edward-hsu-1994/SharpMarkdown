@@ -6,11 +6,19 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SharpMarkdown.Area {
-    //^```.+\r?\n(?!(```).*\r?\n)*```((\r?\n)|$)
-    //^```.+\r?\n(.*\r?\n)*```((\r?\n)|$)
+    /// <summary>
+    /// 程式碼區塊
+    /// </summary>
     [Match(Regex = "^```.+(\r?\n((?!```)(.|.+```))*)+\r?\n```\r?\n")]
     public class CodeArea : ContentBase {
+        /// <summary>
+        /// 語言
+        /// </summary>
         public string Language { get; set; }
+
+        /// <summary>
+        /// 程式碼
+        /// </summary>
         public string Code { get; set; }
 
         public override string OuterMarkdown {

@@ -6,6 +6,9 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SharpMarkdown.Inline {
+    /// <summary>
+    /// 程式碼區塊
+    /// </summary>
     [Match(Regex = @"^`.+`")]
     public class Code : ContentBase {
         public string Text { get; set; }

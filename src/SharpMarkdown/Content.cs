@@ -1,4 +1,5 @@
-﻿using SharpMarkdown.Attributes;
+﻿using SharpMarkdown.Area;
+using SharpMarkdown.Attributes;
 using SharpMarkdown.Inline;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace SharpMarkdown {
     public class Content : ContentBase{
         public List<ContentBase> Children { get; set; } = new List<ContentBase>();
 
-        public bool IsSingleLine {
+        internal bool IsSingleLine {
             get {
                 return Children.All(x => {
                     var NS = x.GetType().Namespace.Split('.').Last();
@@ -33,6 +34,13 @@ namespace SharpMarkdown {
             }
         }
 
+        /// <summary>
+        /// 轉換為Section
+        /// </summary>
+        /// <returns>Section</returns>
+        public Section ToSegment() {
+            return Section.FromContent(this);
+        }
         public static Content Parse(string text, out int length) {
             var lines = text.Split('\n');
             var temp = lines.FirstOrDefault() ?? "";

@@ -6,6 +6,9 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SharpMarkdown.Inline {
+    /// <summary>
+    /// 粗體
+    /// </summary>
     [Match(Regex = @"^\*\*[^\*\r\n]+\*\*")]
     [Match(Regex = @"^__[^_\r\n]+__")]
     public class Bold : Content{
