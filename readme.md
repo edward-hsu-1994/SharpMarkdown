@@ -1,21 +1,24 @@
 SharpMarkdown
 =====
-¥»®M¥ó¥Î¥H­åªRMarkdown¤å¥óµ²ºc¡AÂ²©öªº±NMarkdown¤å¥óÂà´«¬°ª«¥ó¡C
+æœ¬å¥—ä»¶ç”¨ä»¥å‰–æMarkdownæ–‡ä»¶çµæ§‹ï¼Œç°¡æ˜“çš„å°‡Markdownæ–‡ä»¶è½‰æ›ç‚ºç‰©ä»¶ã€‚
 
-### §Ö³t¤W¤â
+### å¿«é€Ÿä¸Šæ‰‹
 ```csharp
 using SharpMarkdown;
 ...(something)...
-//Âà´«¬°Markdown¤º®eª«¥ó
+//è½‰æ›ç‚ºMarkdownå…§å®¹ç‰©ä»¶
 var mdContent = Markdown.Parse(text);
-//¶i¦æ³¹¸`­åªR
+//é€²è¡Œç« ç¯€å‰–æ
 var mdSection = mdContent.ToSection();
-//¦bMarkdown¤º®e¤¤´M§ä°Ñ¦Ò¼ĞÅÒ
+//åœ¨Markdownå…§å®¹ä¸­å°‹æ‰¾åƒè€ƒæ¨™ç±¤
 var tag1 = mdSection.FindTag("1");
 ...(something)...
 ```
-> ¸Ô²Óªº¨Ï¥Î½d¨Ò¥i¨£TestConsole±M®×
+> è©³ç´°çš„ä½¿ç”¨ç¯„ä¾‹å¯è¦‹TestConsoleå°ˆæ¡ˆ
+> å¯ä»¥é€éå‰–æMarkdownç« ç¯€çµæ§‹ä¾†ç¢ºå®šæ–‡ä»¶æ˜¯å¦ç¬¦åˆè¦ç¯„
 
-### Demo
-1.­åªR³¹¸`µ²ºc![Imgur](http://i.imgur.com/2dxOSaP.png)
-2.³¹¸`µ²ºc­åªRµ²ªG![Imgur](http://i.imgur.com/QfbhFx3.png)
+### æ¼”ç¤º
+1.å‰–æç« ç¯€çµæ§‹
+![Imgur][http://i.imgur.com/2dxOSaP.png]
+2.ç« ç¯€çµæ§‹å‰–æçµæœ
+![Imgur](http://i.imgur.com/QfbhFx3.png)
