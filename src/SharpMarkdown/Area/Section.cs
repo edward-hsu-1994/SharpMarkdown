@@ -53,6 +53,28 @@ namespace SharpMarkdown.Area {
             return result.ToArray();
         }
 
+        /// <summary>
+        /// 找尋指定ID的參考標籤
+        /// </summary>
+        /// <param name="id">參考標籤ID</param>
+        /// <returns>Tag</returns>
+        public Tag FindTag(string id) {
+            Tag result = null;
+            foreach (var child in Children) {
+                if (child is Section) {
+                    Tag nextLevel = ((Section)child).FindTag(id);
+                    result = result ?? nextLevel;
+                }else if(child is Tag) {
+                    Tag temp = (Tag)child;
+                    if(temp.Id.ToLower() == id.ToLower()) {
+                        result = result ?? temp;
+                    }
+                }
+                if (result != null) break;
+            }
+            return result;
+        }
+
         internal static Section Convert(List<MarkdownRaw> contents, int level = 1) {
             var result = new Section();
             if (contents.Count == 0) return result;

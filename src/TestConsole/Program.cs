@@ -15,6 +15,8 @@ namespace TestConsole {
             var mdContent = Markdown.Parse(text);
             var mdSection = mdContent.ToSection();
 
+            var tag1 = mdSection.FindTag("1");
+
             var temp = SegmentsList(mdSection);
             foreach(var line in temp) {
                 Console.WriteLine(line);
