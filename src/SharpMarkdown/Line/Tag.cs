@@ -9,7 +9,7 @@ namespace SharpMarkdown.Line {
     /// <summary>
     /// 參考標籤
     /// </summary>
-    [Match(Regex = @"^\[[^\]]+\]:\s*.+([\n\s]|(" + "[\"\'\\(].+[\"\'\\)]" + "))?")]
+    [Match(Regex = @"^(\s*\[[^\]]+\]):\s*.+([\n\s]|(" + "[\"\'\\(].+[\"\'\\)]" + "))?")]
     public class Tag : MarkdownRaw{
         /// <summary>
         /// 唯一識別號
@@ -64,8 +64,8 @@ namespace SharpMarkdown.Line {
                     .GetRegex().Match(text);
 
 
-                Regex idRegex = new Regex(@"\[.+\]");
-                Regex urlRegex = new Regex(":[^\"\'\\(]+[\\n\\s]");
+                Regex idRegex = new Regex(@"\[[^\]]+\]");
+                Regex urlRegex = new Regex(":[^\"\'\\(]+[\\n\\s]?");
                 Regex optionalRegex = new Regex("[\"\'\\(].+[\"\'\\)]");
                 var temp = match.Value;
 
