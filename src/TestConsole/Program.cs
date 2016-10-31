@@ -17,6 +17,7 @@ namespace TestConsole {
 
             var tag1 = mdSection.FindTag("1");
 
+            //顯示章節結構
             var temp = SegmentsList(mdSection);
             foreach(var line in temp) {
                 Console.WriteLine(line);
