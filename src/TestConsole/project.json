@@ -9,7 +9,7 @@
       "type": "platform",
       "version": "1.0.1"
     },
-    "SharpMarkdown": "1.0.0-*"
+    "SharpMarkdown": "1.0.0"
   },
 
   "frameworks": {
