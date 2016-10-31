@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SharpMarkdown.Area{
+namespace SharpMarkdown.Area {
     /// <summary>
     /// 章節
     /// </summary>
@@ -26,7 +26,7 @@ namespace SharpMarkdown.Area{
         public override string OuterMarkdown {
             get {
                 List<ContentBase> temp = new List<ContentBase>(Children);
-                if(Header != null)temp.Insert(0, Header);
+                if (Header != null) temp.Insert(0, Header);
                 return Content.ToMarkdown(temp);
             }
         }
@@ -44,7 +44,7 @@ namespace SharpMarkdown.Area{
         /// <returns>子章節列表</returns>
         public Section[] GetAllSubsections() {
             List<Section> result = new List<Section>();
-            foreach(var section in Children) {
+            foreach (var section in Children) {
                 if (!(section is Section)) continue;
                 Section s = (Section)section;
                 result.Add(s);
@@ -53,11 +53,11 @@ namespace SharpMarkdown.Area{
             return result.ToArray();
         }
 
-        public static Section Parse(List<ContentBase> contents,int level = 1) {
+        internal static Section Convert(List<ContentBase> contents, int level = 1) {
             var result = new Section();
             if (contents.Count == 0) return result;
 
-            var indexList = contents.Select((x,i) => new {
+            var indexList = contents.Select((x, i) => new {
                     level = (x is Header) ? ((Header)x).Level : 0,
                     content = x,
                     index = i
@@ -65,15 +65,15 @@ namespace SharpMarkdown.Area{
                 .Where(x => x.level == level)
                 .ToList();
 
-            if(indexList.Count == 0) {
-                if (level <= 6) {
-                    return Parse(contents, level + 1);
+            if (indexList.Count == 0) {
+                if (level < 6) {
+                    return Convert(contents, level + 1);
                 }
                 result.Children = contents;
                 return result;
             }
-            
-            if(indexList.First().index != 0) {
+
+            if (indexList.First().index != 0) {
                 indexList.Insert(0, new {
                     level = level,
                     content = default(ContentBase),
@@ -81,13 +81,13 @@ namespace SharpMarkdown.Area{
                 });
             }
 
-            for(int i = 0; i < indexList.Count; i++) {
+            for (int i = 0; i < indexList.Count; i++) {
                 List<ContentBase> sectionContents = null;
 
                 if (i < indexList.Count - 1) {
                     sectionContents = contents
                         .Skip(indexList[i].index)
-                        .Take(indexList[i + 1].index)
+                        .Take(indexList[i + 1].index - indexList[i].index)
                         .ToList();
                 } else {
                     sectionContents = contents
@@ -98,22 +98,42 @@ namespace SharpMarkdown.Area{
                 var childSection = new Section() {
                     Header = sectionContents.First() as Header
                 };
-                childSection.Children.Add(Parse(sectionContents.Skip(1).ToList(),level + 1));
+                if (childSection.Header == null) {
+                    childSection = Convert(sectionContents.Skip(1).ToList(), level + 1);
+                } else {
+                    childSection.Children.Add(Convert(sectionContents.Skip(1).ToList(), level + 1));
+                }
                 result.Children.Add(childSection);
-            }
-            if(result.Header == null &&
-               result.Children.Count == 1 &&
-               result.Children.First() is Section) {
-                return result.Children.First() as Section;
             }
             return result;
         }
+
+        internal static Section ClearSection(Section section) {
+            List<ContentBase> newChildren = new List<ContentBase>();
+            foreach(var child in section.Children) {
+                var sec = child as Section;
+                if(sec == null) {
+                    newChildren.Add(child);
+                }else if(sec.Header == null) {
+                    newChildren.AddRange(ClearSection(sec).Children);
+                }else {
+                    newChildren.Add(ClearSection(sec));
+                }
+            }
+            section.Children = newChildren;
+            if (section.Header == null &&
+               section.Children.Count == 1 &&
+               section.Children.First() is Section) {
+                return (Section)section.Children.First();
+            }
+            return section;
+        }
         public static Section FromContent(Content content) {
-            return Parse(content.Children);
+            return ClearSection(Convert(content.Children));
         }
 
         public static explicit operator Section(List<ContentBase> contents) {
-            return Parse(contents);
+            return ClearSection(Convert(contents));
         }
     }
 }
