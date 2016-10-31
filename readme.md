@@ -19,6 +19,6 @@ var tag1 = mdSection.FindTag("1");
 
 ### 演示
 1.剖析章節結構
-![Imgur][http://i.imgur.com/2dxOSaP.png]
+![Imgur](http://i.imgur.com/2dxOSaP.png)
 2.章節結構剖析結果
 ![Imgur](http://i.imgur.com/QfbhFx3.png)
