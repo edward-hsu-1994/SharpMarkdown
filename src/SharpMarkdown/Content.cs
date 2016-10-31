@@ -38,7 +38,7 @@ namespace SharpMarkdown {
         /// 轉換為Section
         /// </summary>
         /// <returns>Section</returns>
-        public Section ToSegment() {
+        public Section ToSection() {
             return Section.FromContent(this);
         }
         public static Content Parse(string text, out int length) {
