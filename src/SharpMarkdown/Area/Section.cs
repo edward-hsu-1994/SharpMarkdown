@@ -101,6 +101,11 @@ namespace SharpMarkdown.Area{
                 childSection.Children.Add(Parse(sectionContents.Skip(1).ToList(),level + 1));
                 result.Children.Add(childSection);
             }
+            if(result.Header == null &&
+               result.Children.Count == 1 &&
+               result.Children.First() is Section) {
+                return result.Children.First() as Section;
+            }
             return result;
         }
         public static Section FromContent(Content content) {
