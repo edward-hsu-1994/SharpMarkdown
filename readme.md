@@ -2,6 +2,11 @@ SharpMarkdown
 =====
 本套件用以剖析Markdown文件結構，簡易的將Markdown文件轉換為物件。
 
+### [Nuget](https://www.nuget.org/packages/SharpMarkdown/1.0.0)
+```
+PM> Install-Package SharpMarkdown
+```
+
 ### 快速上手
 ```csharp
 using SharpMarkdown;
@@ -15,7 +20,7 @@ var tag1 = mdSection.FindTag("1");
 ...(something)...
 ```
 > 詳細的使用範例可見TestConsole專案
-> 可以透過剖析Markdown章節結構來確定文件是否符合規範
+> 可以透過剖析Markdown章節結構來確定文件是否符合規範，或取得指定章節的文字
 
 ### 演示
 1.剖析章節結構
