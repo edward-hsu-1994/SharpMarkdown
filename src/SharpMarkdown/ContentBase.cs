@@ -73,7 +73,8 @@ namespace SharpMarkdown {
         public static List<Type> LineTypes = new List<Type>(
             new Type[] {
                 //typeof(BlockquotesItem),
-                typeof(Divider),typeof(Header),
+                typeof(Divider),typeof(SetextHeader),
+                typeof(Header),
                 typeof(Tag),typeof(Content)                
             });
 
