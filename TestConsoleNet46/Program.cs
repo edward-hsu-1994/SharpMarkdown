@@ -10,13 +10,27 @@ namespace TestConsoleNet46 {
     class Program {
         public static void Main(string[] args) {
             var text = System.IO.File.ReadAllText("test.md");
-            var mdContent = Markdown.Parse(text);
-            var mdSection = mdContent.ToSection();
+            var standardText = System.IO.File.ReadAllText("standard.md");
 
-            var tag1 = mdSection.FindTag("1");
+            var mdDocument = Markdown.Parse(text);
+            var mdSections = mdDocument.ToSection();
+
+            //讀取作為標準的章節結構
+            var stDoc = Markdown.Parse(standardText).ToSection();
+
+            //基礎結構檢驗(標準有的都必須有)
+            bool isMatchBase = mdSections.IsMatch(stDoc);
+
+            //基礎結構檢驗加上順序檢驗(章節順序需要跟標準一樣)
+            bool isMatchOrder = mdSections.IsMatch(stDoc, Section.MatchModes.Order);
+
+            //章節的順序、結構都要完全一樣(標準有的都要有，沒有的不能有)
+            bool isMatchFull = mdSections.IsMatch(stDoc, Section.MatchModes.Full);
+
+            var tag1 = mdSections.FindTag("1");
 
             //顯示章節結構
-            var temp = SegmentsList(mdSection);
+            var temp = SegmentsList(mdSections);
             foreach (var line in temp) {
                 Console.WriteLine(line);
             }

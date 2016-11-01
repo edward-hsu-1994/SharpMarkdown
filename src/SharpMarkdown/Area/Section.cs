@@ -75,6 +75,70 @@ namespace SharpMarkdown.Area {
             return result;
         }
 
+        /// <summary>
+        /// 結構檢驗方式
+        /// </summary>
+        public enum MatchModes {
+            /// <summary>
+            /// 標準結構為基本需求(不檢查順序與多餘的項目)
+            /// </summary>
+            Base,
+            /// <summary>
+            /// 基於Base檢查後加上章節順序檢查(可多餘項目)
+            /// </summary>
+            Order,
+            /// <summary>
+            /// 結構與順序必須完全符合
+            /// </summary>
+            Full
+        }
+
+        /// <summary>
+        /// 檢查是否符合指定標準章節結構
+        /// </summary>
+        /// <param name="standard">標準結構</param>
+        /// <param name="mode">檢查模式</param>
+        /// <returns>是否符合結構</returns>
+        public bool IsMatch(Section standard,MatchModes mode = MatchModes.Base) {
+            var subsections = this.Children.Where(x => x is Section).Select(x=>(Section)x).ToList<Section>();
+            var standardSubsections = standard.Children.Where(x => x is Section).Select(x => (Section)x).ToList<Section>();
+
+            //嚴格模式必須數量也一樣
+            if (mode == MatchModes.Full && subsections.Count != standardSubsections.Count) return false;
+            
+            //去除不再標準內的章節
+            subsections = subsections.Where(x => standardSubsections.Any(y => y.HeaderText == x.HeaderText)).ToList();
+
+            //標題不符合或章節數量不符合
+            if (standard.HeaderText != this.HeaderText ||
+                subsections.Count != standardSubsections.Count) return false;
+
+            //無子章節
+            if (standardSubsections.Count() == 0) return true;
+
+            //順序檢驗
+            if(mode != MatchModes.Base) {
+                for(int i = 0;
+                    i < standardSubsections.Count;
+                    i++) {
+                    if (standardSubsections[i].HeaderText ==
+                        subsections[i].HeaderText &&
+                        subsections[i].IsMatch(standardSubsections[i])) {
+                        continue;
+                    }
+                    return false;
+                }
+                return true;
+            }
+
+            //基礎檢驗
+            return standardSubsections
+                .All(x => subsections.Any(
+                    y => y.HeaderText == x.HeaderText &&
+                    y.IsMatch(x)
+                ));
+        }
+
         internal static Section Convert(List<MarkdownRaw> contents, int level = 1) {
             var result = new Section();
             if (contents.Count == 0) return result;

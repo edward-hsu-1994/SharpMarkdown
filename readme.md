@@ -15,6 +15,19 @@ using SharpMarkdown;
 var mdContent = Markdown.Parse(text);
 //進行章節剖析
 var mdSection = mdContent.ToSection();
+
+//讀取作為標準的章節結構
+var stDoc = Markdown.Parse(standardText).ToSection();
+
+//基礎結構檢驗(標準有的都必須有)
+bool isMatchBase = mdSections.IsMatch(stDoc);
+
+//基礎結構檢驗加上順序檢驗(章節順序需要跟標準一樣)
+bool isMatchOrder = mdSections.IsMatch(stDoc, Section.MatchModes.Order);
+
+//章節的順序、結構都要完全一樣(標準有的都要有，沒有的不能有)
+bool isMatchFull = mdSections.IsMatch(stDoc, Section.MatchModes.Full);
+
 //在Markdown內容中尋找參考標籤
 var tag1 = mdSection.FindTag("1");
 ...(something)...
@@ -30,3 +43,7 @@ var tag1 = mdSection.FindTag("1");
 2.章節結構剖析結果
 
 ![Imgur](http://i.imgur.com/QfbhFx3.png)
+
+3.章節結構檢驗
+
+![Imgur](http://i.imgur.com/fhAeUL3.png)
