@@ -2,6 +2,7 @@ SharpMarkdown
 =====
 This library used to analyze the structure of the Markdown file.
 Simple converts document string into a Markdown object or structure.
+
 本套件用以分析Markdown文件結構，簡易的轉換檔案字串為Markdown物件與結構。
 
 ### [Nuget](https://www.nuget.org/packages/SharpMarkdown/1.0.0)
@@ -36,14 +37,14 @@ var tag1 = mdSection.FindTag("1");
 ```
 
 ### Demo(演示)
-1. Analyze the structure of the Markdown file(剖析章節結構)
+1.Analyze the structure of the Markdown file(剖析章節結構)
 
 ![Imgur](http://i.imgur.com/2dxOSaP.png)
 
-2. Analyze result(分析結果)
+2.Analyze result(分析結果)
 
 ![Imgur](http://i.imgur.com/QfbhFx3.png)
 
-3. Markdown section structure test(章節結構測試)
+3.Markdown section structure test(章節結構測試)
 
 ![Imgur](http://i.imgur.com/fhAeUL3.png)
