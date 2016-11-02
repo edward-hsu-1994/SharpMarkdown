@@ -95,7 +95,7 @@ namespace SharpMarkdown {
         /// <returns>Markdown Content</returns>
         public static Markdown Parse(string text, bool inline = false) {
             List<MarkdownRaw> result = new List<MarkdownRaw>();
-            text = text.Trim().Replace("\r","");
+            text = text.Replace("\r","");
 
             var types = inline ? InlineTypes : AreaTypes.Concat(LineTypes);
 
@@ -131,15 +131,57 @@ namespace SharpMarkdown {
                 }
                 text = new string(text.Skip(skip).ToArray());
             }
-            return new Markdown() { Children = result };//.Where(x=>x.OuterMarkdown.Length != 0).ToList();
+            var resultInstace = new Markdown() { Children = result };//.Where(x=>x.OuterMarkdown.Length != 0).ToList();
+            if (!resultInstace.IsSingleLine) {//多行實體
+                resultInstace.Children = FilterNewLine(resultInstace.Children);
+            }
+            return resultInstace;
         }
-        
+
+        private static List<MarkdownRaw> FilterNewLine(List<MarkdownRaw> children) {
+            List<MarkdownRaw> result = new List<MarkdownRaw>();
+
+            for (int i = 0; i < children.Count; i++) {
+                if (children[i].GetType() != typeof(Markdown) ||
+                    i == result.Count - 1) {
+                    result.Add(children[i]);
+                    continue;
+                }
+                MarkdownRaw last = children[i];
+                var lines = children.Skip(i + 1).TakeWhile(
+                    x => {
+                        var check = last.GetType() == typeof(Markdown) &&
+                            ((Markdown)last).Children.Count != 0;
+                        last = x;
+                        return check;
+                    }).ToList() ;
+                lines.Insert(0, children[i]);
+                i += lines.Count() - 1;
+
+                if (lines.Count > 1 && lines.Last().OuterMarkdown.Length == 0) {
+                    lines.RemoveAt(lines.Count - 1);
+                }                
+                if (lines.Count > 1) {
+                    result.Add(new Markdown() { Children = lines });
+                }else {
+                    result.Add(lines.First());
+                }
+            }
+
+            return result;
+        }
+
+
         internal static string ToMarkdown(List<MarkdownRaw> contents, bool inline=false) {
             string result = "";
             foreach (var content in contents) {
                 result += content.OuterMarkdown;
                 if (!inline) {
                     result += "\n";
+                    if(content.GetType() == typeof(Markdown) &&
+                       content.OuterMarkdown.Length > 0) {
+                        result += "\n";
+                    }
                 }
             }
             return result;
