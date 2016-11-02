@@ -10,7 +10,7 @@ namespace SharpMarkdown.Area {
     /// <summary>
     /// 清單
     /// </summary>
-    [Match(Regex = @"^(\s*\d+\.\s*.+((\r?\n)|$))+")]
+    [Match(Regex = @"^(\s*\d+\.\s+.+((\r?\n)|$))+")]
     [Match(Regex = @"^(\s*\*\s+.+((\r?\n)|$))+")]
     [Match(Regex = @"^(\s*\+\s+.+((\r?\n)|$))+")]
     [Match(Regex = @"^(\s*\-\s+.+((\r?\n)|$))+")]
