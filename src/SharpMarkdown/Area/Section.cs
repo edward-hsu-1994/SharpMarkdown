@@ -59,16 +59,31 @@ namespace SharpMarkdown.Area {
         /// <param name="id">參考標籤ID</param>
         /// <returns>Tag</returns>
         public Tag FindTag(string id) {
-            Tag result = null;
-            foreach (var child in Children) {
-                if (child is Section) {
-                    Tag nextLevel = ((Section)child).FindTag(id);
-                    result = result ?? nextLevel;
-                }else if(child is Tag) {
-                    Tag temp = (Tag)child;
-                    if(temp.Id.ToLower() == id.ToLower()) {
-                        result = result ?? temp;
-                    }
+            return Find<Tag>(x => x.Id.ToLower() == id.ToLower());
+        }
+
+        /// <summary>
+        /// 找尋指定名稱的章節
+        /// </summary>
+        /// <param name="header">章節名稱</param>
+        /// <returns>章節</returns>
+        public Section FindSection(string header) {
+            return Find<Section>(x => x.HeaderText == header);
+        }
+
+        /// <summary>
+        /// 找尋指定的子節點
+        /// </summary>
+        /// <typeparam name="T">節點類型</typeparam>
+        /// <param name="func">條件方法</param>
+        /// <returns>找尋結果</returns>
+        public T Find<T>(Func<T,bool> func) where T : MarkdownRaw {
+            T result = default(T);
+            foreach(var child in Children) {
+                if(child is T && func((T)child)) {
+                    result = (T)child;
+                }else if(child is Section){
+                    result = result ?? ((Section)child).Find(func);
                 }
                 if (result != null) break;
             }
@@ -82,7 +97,7 @@ namespace SharpMarkdown.Area {
             /// <summary>
             /// 標準結構為基本需求(不檢查順序與多餘的項目)
             /// </summary>
-            Base,
+            Basic,
             /// <summary>
             /// 基於Base檢查後加上章節順序檢查(可多餘項目)
             /// </summary>
@@ -99,7 +114,7 @@ namespace SharpMarkdown.Area {
         /// <param name="standard">標準結構</param>
         /// <param name="mode">檢查模式</param>
         /// <returns>是否符合結構</returns>
-        public bool IsMatch(Section standard,MatchModes mode = MatchModes.Base) {
+        public bool IsMatch(Section standard,MatchModes mode = MatchModes.Basic) {
             var subsections = this.Children.Where(x => x is Section).Select(x=>(Section)x).ToList<Section>();
             var standardSubsections = standard.Children.Where(x => x is Section).Select(x => (Section)x).ToList<Section>();
 
@@ -117,7 +132,7 @@ namespace SharpMarkdown.Area {
             if (standardSubsections.Count() == 0) return true;
 
             //順序檢驗
-            if(mode != MatchModes.Base) {
+            if(mode != MatchModes.Basic) {
                 for(int i = 0;
                     i < standardSubsections.Count;
                     i++) {
