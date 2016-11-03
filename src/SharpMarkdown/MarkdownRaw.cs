@@ -28,6 +28,24 @@ namespace SharpMarkdown {
             }
         }
 
+        /// <summary>
+        /// 內部Markdown片段
+        /// </summary>
+        public virtual string InnerMarkdown {
+            get {
+                return OuterMarkdown;
+            }
+        }
+
+        /// <summary>
+        /// 外顯內部文字內容
+        /// </summary>
+        public virtual string InnerText {
+            get {
+                return OuterMarkdown;
+            }
+        }
+
         protected Match GetMatch(string text) {
             return MatchAttribute.GetMatchAttributes(GetType())
                 .Select(x => new {

@@ -33,6 +33,16 @@ namespace SharpMarkdown {
                 return ToText(Children, IsSingleLine);
             }
         }
+        public override string InnerMarkdown {
+            get {
+                return OuterMarkdown;
+            }
+        }
+        public override string InnerText {
+            get {
+                return OuterText;
+            }
+        }
 
         /// <summary>
         /// 轉換為Section

@@ -31,6 +31,24 @@ namespace SharpMarkdown.Area {
             }
         }
 
+        public override string InnerMarkdown {
+            get {
+                return Code;
+            }
+        }
+
+        public override string OuterText {
+            get {
+                return Code;
+            }
+        }
+
+        public override string InnerText {
+            get {
+                return Code;
+            }
+        }
+
         public static CodeArea Parse(string text, out int length) {
             var attrs = MatchAttribute.GetMatchAttributes<CodeArea>()
                 .Select(x => new {

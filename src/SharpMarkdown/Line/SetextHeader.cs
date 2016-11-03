@@ -23,6 +23,7 @@ namespace SharpMarkdown.Line {
                 this.Children = header.Children;
             }
         }
+               
 
         public static SetextHeader Parse(string text,out int length) {
             try {

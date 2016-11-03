@@ -20,13 +20,25 @@ namespace SharpMarkdown.Line {
         public override string OuterMarkdown {
             get {
                 return new string('#', Level) + " " + 
-                    string.Join("",Children.Select(x=>x.OuterMarkdown));
+                    InnerMarkdown;
             }
             set {
                 int temp = 0;
                 Header header = Parse(value,out temp);
                 this.Level = header.Level;
                 this.Children = header.Children;
+            }
+        }
+
+        public override string InnerMarkdown {
+            get {
+                return string.Join("", Children.Select(x => x.OuterMarkdown));
+            }
+        }
+
+        public override string InnerText {
+            get {
+                return base.InnerText;
             }
         }
 

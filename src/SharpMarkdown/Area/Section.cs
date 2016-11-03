@@ -37,6 +37,16 @@ namespace SharpMarkdown.Area {
                 return Markdown.ToText(temp);
             }
         }
+        public override string InnerMarkdown {
+            get {
+                return ToMarkdown(Children, IsSingleLine);
+            }
+        }
+        public override string InnerText {
+            get {
+                return ToText(Children, IsSingleLine);
+            }
+        }
 
         /// <summary>
         /// 取得所有子章節列表
