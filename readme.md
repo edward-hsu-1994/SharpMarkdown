@@ -1,6 +1,7 @@
 SharpMarkdown
-[![sharpmarkdown MyGet Build Status](https://www.myget.org/BuildSource/Badge/sharpmarkdown?identifier=7546191a-bd7f-4e00-b685-2a422dd6d09e)](https://www.myget.org/)
 =====
+[![sharpmarkdown MyGet Build Status](https://www.myget.org/BuildSource/Badge/sharpmarkdown?identifier=7546191a-bd7f-4e00-b685-2a422dd6d09e)](https://www.myget.org/)
+
 This library used to analyze the structure of the Markdown file.
 Simple converts document string into a Markdown object or structure.
 
