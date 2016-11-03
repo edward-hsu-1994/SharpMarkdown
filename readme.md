@@ -1,11 +1,14 @@
 SharpMarkdown
+[![sharpmarkdown MyGet Build Status](https://www.myget.org/BuildSource/Badge/sharpmarkdown?identifier=7546191a-bd7f-4e00-b685-2a422dd6d09e)](https://www.myget.org/)
 =====
 This library used to analyze the structure of the Markdown file.
 Simple converts document string into a Markdown object or structure.
 
 本套件用以分析Markdown文件結構，簡易的轉換檔案字串為Markdown物件與結構。
 
-### [Nuget](https://www.nuget.org/packages/SharpMarkdown/1.0.0)
+### Install Packages(安裝)
+1. [Nuget](https://www.nuget.org/packages/SharpMarkdown)
+2. [MyGet](https://www.myget.org/feed/sharpmarkdown/package/nuget/SharpMarkdown)
 ```
 PM> Install-Package SharpMarkdown
 ```
