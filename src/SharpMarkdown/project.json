@@ -4,6 +4,8 @@
   "description": "This library used to analyze the structure of the Markdown file. Simple converts document string into a Markdown object or structure.",
   "authors": [ "PeiYao Xu" ],
   "copyright": "MIT",
+  "projectUrl": "https://github.com/XuPeiYao/SharpMarkdown/",
+  "licenseUrl": "https://github.com/XuPeiYao/SharpMarkdown/blob/master/license.txt",
   "dependencies": {
     "NETStandard.Library": "1.6.0"
   },
