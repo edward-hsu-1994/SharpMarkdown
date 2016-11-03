@@ -1,11 +1,16 @@
 {
-  "version": "1.0.0-*",
-
+  "title": "SharpMarkdown",
+  "version": "1.0.3",
+  "description": "This library used to analyze the structure of the Markdown file. Simple converts document string into a Markdown object or structure.",
+  "authors": [ "PeiYao Xu" ],
+  "copyright": "MIT",
   "dependencies": {
     "NETStandard.Library": "1.6.0"
   },
-
   "frameworks": {
+    "netcoreapp1.0": {
+      "imports": "dnxcore50"
+    },
     "netstandard1.6": {
       "imports": "dnxcore50"
     },
