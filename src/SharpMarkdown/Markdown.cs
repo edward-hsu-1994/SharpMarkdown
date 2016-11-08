@@ -45,6 +45,25 @@ namespace SharpMarkdown {
         }
 
         /// <summary>
+        /// 找尋指定的子節點
+        /// </summary>
+        /// <typeparam name="T">節點類型</typeparam>
+        /// <param name="func">條件方法</param>
+        /// <returns>找尋結果</returns>
+        public T Find<T>(Func<T, bool> func) where T : MarkdownRaw {
+            T result = default(T);
+            foreach (var child in Children) {
+                if (child is T && func((T)child)) {
+                    result = (T)child;
+                } else if (child is Section) {
+                    result = result ?? ((Section)child).Find(func);
+                }
+                if (result != null) break;
+            }
+            return result;
+        }
+
+        /// <summary>
         /// 轉換為Section
         /// </summary>
         /// <returns>Section</returns>
