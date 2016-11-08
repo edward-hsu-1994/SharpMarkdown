@@ -38,7 +38,13 @@ namespace SharpMarkdown.Line {
 
         public override string InnerText {
             get {
-                return base.InnerText;
+                return base.InnerText.Trim();
+            }
+        }
+
+        public override string OuterText {
+            get {
+                return this.InnerText;
             }
         }
 
