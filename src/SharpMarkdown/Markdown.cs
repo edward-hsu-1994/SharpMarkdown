@@ -1,6 +1,7 @@
 ﻿using SharpMarkdown.Area;
 using SharpMarkdown.Attributes;
 using SharpMarkdown.Inline;
+using SharpMarkdown.Line;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,6 +71,34 @@ namespace SharpMarkdown {
         public Section ToSection() {
             return Section.FromContent(this);
         }
+
+        /// <summary>
+        /// 找尋指定的章節並剖析
+        /// </summary>
+        /// <param name="name">名稱</param>
+        /// <returns>找尋結果</returns>
+        public Section FindSection(string name) {
+            if (IsSingleLine) return null;
+            int level = -1;
+            var mdList = Children.SkipWhile(x => {
+                Header header = x as Header;
+                if (header == null) return true;
+                return x.InnerText != name;
+            }).TakeWhile((x,i) => {
+                if (i == 0) {
+                    level = ((Header)x).Level;
+                    return true;
+                }
+                Header header = x as Header;
+                if (header == null) return true;
+                if (header.Level <= level) return false;
+                return true;
+            }).ToList();
+            var result = (Section)mdList;
+            if (result.Children.Count == 0 && result.Header == null) return null;
+            return result;
+        }
+
         public static Markdown Parse(string text, out int length) {
             var lines = text.Split('\n');
             var temp = lines.FirstOrDefault() ?? "";

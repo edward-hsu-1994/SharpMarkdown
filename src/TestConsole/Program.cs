@@ -16,7 +16,8 @@ namespace TestConsole {
 
             var mdDocument = Markdown.Parse(text);
             var mdSections = mdDocument.ToSection();
-
+            //找出指定章節
+            var findSection = mdDocument.FindSection("Lists");
             //讀取作為標準的章節結構
             var stDoc = Markdown.Parse(standardText).ToSection();
             var temp2 = stDoc.HeaderText;
