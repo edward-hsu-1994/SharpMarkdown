@@ -55,8 +55,8 @@ namespace SharpMarkdown {
             foreach (var child in Children) {
                 if (child is T && func((T)child)) {
                     result = (T)child;
-                } else if (child is Section) {
-                    result = result ?? ((Section)child).Find(func);
+                } else if (child is Markdown) {
+                    result = ((Markdown)child).Find(func);
                 }
                 if (result != null) break;
             }
