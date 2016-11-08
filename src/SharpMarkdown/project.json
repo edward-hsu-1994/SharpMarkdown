@@ -1,6 +1,6 @@
 {
   "title": "SharpMarkdown",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "This library used to analyze the structure of the Markdown file. Simple converts document string into a Markdown object or structure.",
   "authors": [ "PeiYao Xu" ],
   "copyright": "MIT",
