@@ -44,7 +44,7 @@ namespace SharpMarkdown.Line {
 
         public override string OuterText {
             get {
-                return this.InnerText;
+                return base.OuterText.Trim();
             }
         }
 
