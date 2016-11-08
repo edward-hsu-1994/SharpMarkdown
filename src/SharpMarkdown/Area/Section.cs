@@ -49,6 +49,16 @@ namespace SharpMarkdown.Area {
         }
 
         /// <summary>
+        /// 檢驗是否為空
+        /// </summary>
+        public bool IsEmpty {
+            get {
+                return string.IsNullOrWhiteSpace(HeaderText) && 
+                    Children.Count == 0;
+            }
+        }
+
+        /// <summary>
         /// 取得所有子章節列表
         /// </summary>
         /// <returns>子章節列表</returns>
