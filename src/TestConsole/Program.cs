@@ -19,7 +19,7 @@ namespace TestConsole {
 
             //讀取作為標準的章節結構
             var stDoc = Markdown.Parse(standardText).ToSection();
-
+            var temp2 = stDoc.HeaderText;
             //基礎結構檢驗(標準有的都必須有)
             bool isMatchBase = mdSections.IsMatch(stDoc);
 

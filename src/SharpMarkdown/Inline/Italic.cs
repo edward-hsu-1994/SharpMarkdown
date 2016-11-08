@@ -9,7 +9,7 @@ namespace SharpMarkdown.Inline {
     /// 斜體
     /// </summary>
     [Match(Regex = @"^\*[^\*\r\n]+\*")]
-    [Match(Regex = @"^__[^_\r\n]+__")]
+    [Match(Regex = @"^_[^_\r\n]+_")]
     public class Italic : Markdown {
         public override string OuterMarkdown {
             get {
@@ -20,7 +20,6 @@ namespace SharpMarkdown.Inline {
                 Children = MarkdownRaw.Parse(value.Trim()).Children;
             }
         }
-
 
         public static Italic Parse(string text, out int length) {
             var attrs = MatchAttribute.GetMatchAttributes<Italic>()
