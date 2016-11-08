@@ -83,7 +83,8 @@ namespace SharpMarkdown {
             var mdList = Children.SkipWhile(x => {
                 Header header = x as Header;
                 if (header == null) return true;
-                return x.InnerText != name;
+                if (x.InnerText == null) return true;
+                return !x.InnerText.Contains(name);
             }).TakeWhile((x,i) => {
                 if (i == 0) {
                     level = ((Header)x).Level;
