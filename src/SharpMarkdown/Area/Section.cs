@@ -207,17 +207,24 @@ namespace SharpMarkdown.Area {
                 if(sec == null) {
                     newChildren.Add(child);
                 }else if(sec.Header == null) {
-                    newChildren.AddRange(ClearSection(sec).Children);
+                    var subSection = ClearSection(sec);
+                    if (subSection.Header == null) {
+                        newChildren.AddRange(subSection.Children);
+                    }else {
+                        newChildren.Add(subSection);
+                    }
                 }else {
                     newChildren.Add(ClearSection(sec));
                 }
             }
             section.Children = newChildren;
+            
             if (section.Header == null &&
                section.Children.Count == 1 &&
                section.Children.First() is Section) {
                 return (Section)section.Children.First();
             }
+            
             return section;
         }
         public static Section FromContent(Markdown content) {
