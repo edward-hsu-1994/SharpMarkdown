@@ -117,7 +117,7 @@ namespace SharpMarkdown {
 
             var types = inline ? InlineTypes : AreaTypes.Concat(LineTypes);
 
-            while (text.Length>0) {
+            while (/*text.Trim().Length > 0 &&*/ text.Length>0) {
                 int skip = 0;
                 //剖析引用參數
                 object[] args = new object[] { text, 0 };
@@ -146,6 +146,9 @@ namespace SharpMarkdown {
                     }else {
                         result.Add(new MarkdownRaw() { OuterMarkdown = addChar });
                     }
+                }else if (text[0] == '\n') {
+                    result.Add(new MarkdownRaw() { OuterMarkdown = "\n" });
+                    skip = 1;
                 }
                 text = new string(text.Skip(skip).ToArray());
             }
