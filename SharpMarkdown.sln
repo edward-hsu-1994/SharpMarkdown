@@ -1,20 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0AA564B3-D329-412B-B437-1A2C40C3BC9A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C748466B-8D48-481B-BEB7-45DEEDB5C937}"
 	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
 		license.txt = license.txt
 		readme.md = readme.md
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SharpMarkdown", "src\SharpMarkdown\SharpMarkdown.xproj", "{EBFF4D80-4488-4CEC-B7EF-3D110FEF3A41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpMarkdown", "src\SharpMarkdown\SharpMarkdown.csproj", "{EBFF4D80-4488-4CEC-B7EF-3D110FEF3A41}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "TestConsole", "src\TestConsole\TestConsole.xproj", "{BD73373B-FD9F-4747-851D-597D7A450548}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestConsole", "src\TestConsole\TestConsole.csproj", "{BD73373B-FD9F-4747-851D-597D7A450548}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
